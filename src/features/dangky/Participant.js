@@ -1,12 +1,8 @@
 import React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+
 import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import EnhancedTable from "../../component/MaterialDesign/Table/EnhancedTable";
 export default function Participant() {
   const data = [
     {
@@ -14,70 +10,103 @@ export default function Participant() {
       HoTen: "Nguyen Van A",
       Username: "admin",
       Password: "123456",
-      Status: "Online",
+      Status: 2,
     },
     {
       STT: 2,
       HoTen: "Nguyen Van B",
       Username: "admin",
       Password: "123456",
-      Status: "Online",
+      Status: 1,
     },
     {
       STT: 3,
       HoTen: "Nguyen Van C",
       Username: "admin",
       Password: "123456",
-      Status: "Online",
+      Status: 2,
     },
     {
       STT: 4,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 1,
     },
     {
-      STT: 4,
+      STT: 5,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 1,
     },
     {
-      STT: 4,
+      STT: 6,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 2,
     },
     {
-      STT: 4,
+      STT: 7,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 2,
     },
     {
-      STT: 4,
+      STT: 8,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 2,
     },
     {
-      STT: 4,
+      STT: 9,
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
-      Status: true,
+      Status: 1,
+    },
+  ];
+  const headTable = [
+    {
+      id: "STT",
+      numeric: false,
+      disablePadding: false,
+      label: "STT",
+    },
+    {
+      id: "HoTen",
+      numeric: false,
+      disablePadding: false,
+      label: "HoTen",
+    },
+    {
+      id: "Username",
+      numeric: false,
+      disablePadding: false,
+      label: "TenDangNhap",
+    },
+    {
+      id: "Password",
+      numeric: false,
+      disablePadding: false,
+      label: "MatKhau",
+    },
+    {
+      id: "Status",
+      numeric: false,
+      disablePadding: false,
+      isStatus: true,
+      label: "TrangThai",
     },
   ];
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <AppBar position="static" component="nav" color="transparent">
-          <Toolbar sx={{ display: "flex" }} variant="dense">
+          <Toolbar sx={{ display: "flex" }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Đăng Ký Tập Huấn
             </Typography>
@@ -89,34 +118,7 @@ export default function Participant() {
 
         <Box component="main" sx={{ mt: 1.5 }}>
           <Paper elevation={3}>
-            <TableContainer sx={{ maxHeight: 370 }}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>STT</TableCell>
-                    <TableCell>Họ Tên</TableCell>
-                    <TableCell>Tên Đăng Nhập</TableCell>
-                    <TableCell>Mật Khẩu</TableCell>
-                    <TableCell>Trạng Thái</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {data.map((row) => {
-                    return (
-                      <TableRow>
-                        <TableCell>{row.STT}</TableCell>
-                        <TableCell>{row.HoTen}</TableCell>
-                        <TableCell>{row.Username}</TableCell>
-                        <TableCell>{row.Password}</TableCell>
-                        <TableCell>
-                          {row.Status ? "Đã Đăng Ký" : "Chưa Đăng Ký"}
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <EnhancedTable data={data} headTable={headTable} />
           </Paper>
         </Box>
       </Box>
