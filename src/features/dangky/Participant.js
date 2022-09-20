@@ -3,6 +3,7 @@ import React from "react";
 import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import EnhancedTable from "../../component/MaterialDesign/Table/EnhancedTable";
+import LoginAppBar from "../../component/MaterialDesign/LoginAppBar";
 export default function Participant() {
   const data = [
     {
@@ -104,6 +105,7 @@ export default function Participant() {
   ];
   return (
     <>
+      <LoginAppBar />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <AppBar position="static" component="nav" color="transparent">
           <Toolbar sx={{ display: "flex" }}>

@@ -17,7 +17,10 @@ import {
 import { blue } from "@mui/material/colors";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useProvideAuth from "../../ultilities/customHook/useProvideAuth";
+import { useHistory } from "react-router-dom";
 export default function UserLogin() {
+  const history = useHistory();
   const schema = yup.object({
     Username: yup.string().required("Username chưa nhập"),
     password: yup.string().required("Password chưa nhập"),
@@ -35,7 +38,14 @@ export default function UserLogin() {
     },
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  const useAuth = useProvideAuth();
+  const onSubmit = (data) => {
+    console.log(data);
+    useAuth.signin(() => {
+      history.replace("/");
+    });
+    // console.log(data);
+  };
   function checkIsValidField(fieldName) {
     if (isValid) return false;
     if (errors.hasOwnProperty(fieldName)) return true;
