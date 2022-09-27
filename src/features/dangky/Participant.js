@@ -105,7 +105,6 @@ export default function Participant() {
   ];
   return (
     <>
-      <LoginAppBar />
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <AppBar position="static" component="nav" color="transparent">
           <Toolbar sx={{ display: "flex" }}>

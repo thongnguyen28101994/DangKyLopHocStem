@@ -1,16 +1,15 @@
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLoginInformation, Login } from "../../redux/CreateSlice/LoginSlice";
+import { useHistory } from "react-router-dom";
+import { changeLoggedState, Login } from "../../redux/CreateSlice/LoginSlice";
 
 export default function useProvideAuth() {
-  const value = useSelector((state) => state.login.value);
-  const [user, setUser] = useState(value);
+  const user = useSelector((state) => state.login.value);
 
+  const history = useHistory();
   const dispatch = useDispatch();
   const signin = (cb) => {
     dispatch(Login());
-    console.log(value);
-    setUser(value);
+    history.replace("/");
     cb();
     // return async () => {
     //   console.log("a");
@@ -26,10 +25,9 @@ export default function useProvideAuth() {
     // };
   };
   const signout = (cb) => {
-    return () => {
-      setUser(null);
-      cb();
-    };
+    dispatch(changeLoggedState());
+    history.replace("/");
+    cb();
   };
   return { user, signin, signout };
 }

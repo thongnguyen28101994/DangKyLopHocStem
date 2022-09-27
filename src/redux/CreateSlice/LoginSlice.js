@@ -16,8 +16,8 @@ export const LoginSlice = createSlice({
     getUserInfomation: (state, action) => {
       state.test = action.payload;
     },
-    changeLoggedState: (state, action) => {
-      state.value = action.payload;
+    changeLoggedState: (state) => {
+      state.value.isLogged = !state.value.isLogged;
     },
   },
 });
@@ -29,9 +29,8 @@ export default LoginSlice.reducer;
 export async function getLoginInformation(dispatch, getState) {}
 
 export function Login() {
-  return async function ChangeToLoginState(dispatch, getState) {
-    const newValue = getState().login.value;
-    dispatch(changeLoggedState({ ...newValue, isLogged: true }));
+  return async function ChangeLoginState(dispatch, getState) {
+    dispatch(changeLoggedState());
     // const result = await RegisterApi.getUserData();
     // console.log(result);
     //dispatch(getUserInfomation(result.response));
