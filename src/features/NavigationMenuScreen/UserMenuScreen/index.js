@@ -18,6 +18,7 @@ import { MainListItems } from "./listMenuItem";
 import { Route, useRouteMatch, Switch as SwitchRouter } from "react-router-dom";
 import RegisterForm from "../../dangky";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
+import ClassesScreen from "../../ClassesScreen";
 const mdTheme = createTheme();
 
 export default function UserMenuScreen() {
@@ -32,19 +33,6 @@ export default function UserMenuScreen() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <LoginAppBar open={open} handleToggleDrawer={handleToggleDrawer} />
-        {/* <AppBar position="absolute" open={open}>
-          <Toolbar sx={{ pr: "24px" }}>
-            <IconButton
-              onClick={handleToggleDrawer}
-              sx={{ marginRight: "36px", ...(open && { display: "none" }) }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: 1 }}>
-              User Menu
-            </Typography>
-          </Toolbar>
-        </AppBar> */}
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -80,7 +68,7 @@ export default function UserMenuScreen() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container>
-              <Grid item xs={12} md={8} lg={9}>
+              <Grid item xs={12} md={12} lg={12}>
                 <Paper
                   sx={{
                     p: 2,
@@ -89,8 +77,11 @@ export default function UserMenuScreen() {
                   }}
                 >
                   <SwitchRouter>
-                    <Route exact path={`${root.path}`}>
+                    {/* <Route exact path={``}>
                       <RegisterForm />
+                    </Route> */}
+                    <Route path={``}>
+                      <ClassesScreen />
                     </Route>
                   </SwitchRouter>
                 </Paper>

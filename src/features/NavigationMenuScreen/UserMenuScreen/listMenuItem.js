@@ -11,8 +11,14 @@ import { useRouteMatch } from "react-router-dom";
 
 export const MainListItems = () => {
   const root = useRouteMatch();
+  console.log(root);
   return (
     <React.Fragment>
+      <ListItemLink
+        to={`/classScreen`}
+        primary={"Lớp Học"}
+        icon={<DashboardIcon />}
+      ></ListItemLink>
       <ListItemLink
         to={`${root.url}`}
         primary={"Danh Sách Đăng Ký"}
