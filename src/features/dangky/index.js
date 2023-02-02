@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import Participant from "./Participant";
+import Participant from "./component/Participant";
 export default function RegisterForm() {
   const {
     control,
@@ -14,6 +14,7 @@ export default function RegisterForm() {
   const onSubmit = (data) => {
     console.log(data);
   };
+
   return (
     <>
       <Participant></Participant>

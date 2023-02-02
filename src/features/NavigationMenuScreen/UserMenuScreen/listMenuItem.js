@@ -11,16 +11,15 @@ import { useRouteMatch } from "react-router-dom";
 
 export const MainListItems = () => {
   const root = useRouteMatch();
-  console.log(root);
   return (
     <React.Fragment>
-      <ListItemLink
-        to={`/classScreen`}
+      {/* <ListItemLink
+        to={`${root.url}/lophoc`}
         primary={"Lớp Học"}
         icon={<DashboardIcon />}
-      ></ListItemLink>
+      ></ListItemLink> */}
       <ListItemLink
-        to={`${root.url}`}
+        to={`${root.url}/dangky`}
         primary={"Danh Sách Đăng Ký"}
         icon={<DashboardIcon />}
       ></ListItemLink>

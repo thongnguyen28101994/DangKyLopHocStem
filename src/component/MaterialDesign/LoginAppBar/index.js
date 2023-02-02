@@ -13,7 +13,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import useProvideAuth from "../../../ultilities/customHook/useProvideAuth";
 import { useHistory } from "react-router-dom";
-export default function LoginAppBar({ open, handleToggleDrawer }) {
+export default function LoginAppBar({ open, handleToggleDrawer, title }) {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const history = useHistory();
   const auth = useProvideAuth();
@@ -38,7 +38,7 @@ export default function LoginAppBar({ open, handleToggleDrawer }) {
           <MenuIcon />
         </IconButton>
         <Typography component="h1" variant="h6" noWrap sx={{ flexGrow: 1 }}>
-          User Menu
+          {title}
         </Typography>
         <Box sx={{ flexGrow: 0 }}>
           <IconButton

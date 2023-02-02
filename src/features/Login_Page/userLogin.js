@@ -41,6 +41,7 @@ export default function UserLogin() {
   const useAuth = useProvideAuth();
   const onSubmit = (data) => {
     useAuth.signin(() => {});
+    history.replace("/user/dangky");
     // console.log(data);
   };
   function checkIsValidField(fieldName) {

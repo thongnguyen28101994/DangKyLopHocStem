@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { changeLoggedState, Login } from "../../redux/CreateSlice/LoginSlice";
 
 export default function useProvideAuth() {
   const user = useSelector((state) => state.login.value);
 
   const history = useHistory();
+  const root = useRouteMatch();
   const dispatch = useDispatch();
   const signin = (cb) => {
     dispatch(Login());
-    history.replace("/");
+    history.replace(`${root.url}/lophoc`);
     cb();
     // return async () => {
     //   console.log("a");
@@ -26,7 +27,7 @@ export default function useProvideAuth() {
   };
   const signout = (cb) => {
     dispatch(changeLoggedState());
-    history.replace("/");
+    history.replace("/user");
     cb();
   };
   return { user, signin, signout };

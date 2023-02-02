@@ -1,7 +1,4 @@
 import * as React from "react";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -10,15 +7,23 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import ListItemLink from "../../../component/MaterialDesign/CustomComponent/ListItemLink";
+import { useRouteMatch } from "react-router-dom";
 
-export const mainListItems = (
-  <React.Fragment>
-    <ListItemLink
-      to={"/test"}
-      primary={"Test"}
-      icon={<DashboardIcon />}
-    ></ListItemLink>
-    {/* <ListItemButton>
+export const MainListItems = () => {
+  const root = useRouteMatch();
+  return (
+    <React.Fragment>
+      <ListItemLink
+        to={`${root.url}/lophoc`}
+        primary={"Lớp Học"}
+        icon={<DashboardIcon />}
+      ></ListItemLink>
+      <ListItemLink
+        to={`${root.url}/dangky`}
+        primary={"Danh Sách Đăng Ký"}
+        icon={<DashboardIcon />}
+      ></ListItemLink>
+      {/* <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -48,31 +53,32 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Integrations" />
     </ListItemButton> */}
-  </React.Fragment>
-);
+    </React.Fragment>
+  );
 
-export const secondaryListItems = (
-  <React.Fragment>
-    <ListSubheader component="div" inset>
-      Saved reports
-    </ListSubheader>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton>
-  </React.Fragment>
-);
+  // export const secondaryListItems = (
+  //   <React.Fragment>
+  //     {/* <ListSubheader component="div" inset>
+  //       Saved reports
+  //     </ListSubheader>
+  //     <ListItemButton>
+  //       <ListItemIcon>
+  //         <AssignmentIcon />
+  //       </ListItemIcon>
+  //       <ListItemText primary="Current month" />
+  //     </ListItemButton>
+  //     <ListItemButton>
+  //       <ListItemIcon>
+  //         <AssignmentIcon />
+  //       </ListItemIcon>
+  //       <ListItemText primary="Last quarter" />
+  //     </ListItemButton>
+  //     <ListItemButton>
+  //       <ListItemIcon>
+  //         <AssignmentIcon />
+  //       </ListItemIcon>
+  //       <ListItemText primary="Year-end sale" />
+  //     </ListItemButton> */}
+  //   </React.Fragment>
+  // )
+};

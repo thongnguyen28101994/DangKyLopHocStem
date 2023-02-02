@@ -23,7 +23,6 @@ const mdTheme = createTheme();
 
 export default function UserMenuScreen() {
   const root = useRouteMatch();
-  console.log(root.url);
   const [open, setOpen] = useState(true);
   const handleToggleDrawer = () => {
     setOpen(!open);
@@ -32,7 +31,11 @@ export default function UserMenuScreen() {
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
-        <LoginAppBar open={open} handleToggleDrawer={handleToggleDrawer} />
+        <LoginAppBar
+          title={"Trang Dành Cho User "}
+          open={open}
+          handleToggleDrawer={handleToggleDrawer}
+        />
         <Drawer variant="permanent" open={open}>
           <Toolbar
             sx={{
@@ -77,12 +80,12 @@ export default function UserMenuScreen() {
                   }}
                 >
                   <SwitchRouter>
-                    {/* <Route exact path={``}>
+                    <Route path={`${root.path}/dangky`}>
                       <RegisterForm />
-                    </Route> */}
-                    <Route path={``}>
-                      <ClassesScreen />
                     </Route>
+                    {/* <Route path={`${root.path}/lophoc`}>
+                      <ClassesScreen />
+                    </Route> */}
                   </SwitchRouter>
                 </Paper>
               </Grid>

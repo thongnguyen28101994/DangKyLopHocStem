@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import EnhancedTable from "../../component/MaterialDesign/Table/EnhancedTable";
-import LoginAppBar from "../../component/MaterialDesign/LoginAppBar";
+import EnhancedTable from "../../../component/MaterialDesign/Table/EnhancedTable";
+import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
+import PersonRegisterModal from "./PersonRegisterModal";
 export default function Participant() {
   const data = [
     {
@@ -103,6 +104,13 @@ export default function Participant() {
       label: "TrangThai",
     },
   ];
+  const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
+  const handleCloseModalClassDetail = () => {
+    setModalClassOpen(false);
+  };
+  const handleOpenModalClassDetail = () => {
+    setModalClassOpen(true);
+  };
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -111,7 +119,15 @@ export default function Participant() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Đăng Ký Tập Huấn
             </Typography>
-            <Button variant="outlined" size="small">
+            <Button
+              variant="outlined"
+              size="normal"
+              sx={{ marginRight: "5px" }}
+              onClick={handleOpenModalClassDetail}
+            >
+              Thêm Mới
+            </Button>{" "}
+            <Button variant="outlined" size="normal">
               LƯU
             </Button>
           </Toolbar>
@@ -123,6 +139,10 @@ export default function Participant() {
           </Paper>
         </Box>
       </Box>
+      <PersonRegisterModal
+        isOpen={isModalClassDetailOpen}
+        handleClose={handleCloseModalClassDetail}
+      />
     </>
   );
 }

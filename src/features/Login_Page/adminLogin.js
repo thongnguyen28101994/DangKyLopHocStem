@@ -13,6 +13,8 @@ import {
 import { blue } from "@mui/material/colors";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import useProvideAuth from "../../ultilities/customHook/useProvideAuth";
+import { useHistory } from "react-router-dom";
 export default function AdminLogin() {
   const schema = yup.object({
     Username: yup.string().required("Username chưa nhập"),
@@ -29,7 +31,7 @@ export default function AdminLogin() {
     },
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data);
   // console.log(errors);
   // function checkIsValidValue(fieldName) {
   //   if (!touchedFields?.[fieldName]) return false;
@@ -38,6 +40,14 @@ export default function AdminLogin() {
   //     return false;
   //   }
   // }
+  const history = useHistory();
+  const useAuth = useProvideAuth();
+  const onSubmit = (data) => {
+    useAuth.signin(() => {
+      history.replace(`/admin/lophoc`);
+    });
+    // console.log(data);
+  };
   function checkIsValidField(fieldName) {
     if (isValid) return false;
     if (errors.hasOwnProperty(fieldName)) return true;
