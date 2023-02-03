@@ -19,6 +19,7 @@ import { Route, useRouteMatch, Switch as SwitchRouter } from "react-router-dom";
 import RegisterForm from "../../dangky";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import ClassesScreen from "../../ClassesScreen";
+import Participant from "../../dangky/component/Participant";
 const mdTheme = createTheme();
 
 export default function AdminMenuScreen() {
@@ -81,7 +82,7 @@ export default function AdminMenuScreen() {
                 >
                   <SwitchRouter>
                     <Route path={`${root.path}/dangky`}>
-                      <RegisterForm />
+                      <Participant />
                     </Route>
                     <Route path={`${root.path}/lophoc`}>
                       <ClassesScreen />
