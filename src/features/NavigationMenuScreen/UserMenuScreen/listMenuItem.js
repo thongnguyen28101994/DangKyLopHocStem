@@ -19,7 +19,7 @@ export const MainListItems = () => {
         icon={<DashboardIcon />}
       ></ListItemLink> */}
       <ListItemLink
-        to={`${root.url}/dangky`}
+        to={`${root.url}/loptaphuan`}
         primary={"Danh Sách Đăng Ký"}
         icon={<DashboardIcon />}
       ></ListItemLink>

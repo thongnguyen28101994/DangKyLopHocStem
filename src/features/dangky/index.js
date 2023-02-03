@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import ClassListTable from "./component/ClassListTable";
 import Participant from "./component/Participant";
 export default function RegisterForm() {
   const {
@@ -17,7 +18,8 @@ export default function RegisterForm() {
 
   return (
     <>
-      <Participant></Participant>
+      <ClassListTable />
+      {/* <Participant></Participant> */}
     </>
   );
 }
