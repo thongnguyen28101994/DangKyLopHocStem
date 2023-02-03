@@ -50,12 +50,12 @@ const EnhancedChip = [
   { id: 3, label: "Chưa Lưu", color: "warning" },
   {
     id: 1,
-    label: "Đã Đăng Ký",
+    label: "Đã Đóng Tiền",
     color: "success",
   },
   {
     id: 2,
-    label: "Chưa Đăng Ký",
+    label: "Chưa Chưa Đóng Tiền",
     color: "error",
   },
 ];

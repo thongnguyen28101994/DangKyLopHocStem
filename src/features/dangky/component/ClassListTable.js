@@ -12,7 +12,7 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
-
+console.log("da toi day");
 const rows = [
   createData(1, "Lớp tập huấn a", "10/02/2023", "10/03/2023"),
   createData(1, "Lớp tập huấn b", "10/02/2023", "10/03/2023"),
@@ -54,7 +54,7 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
                   size="medium"
                   color="warning"
                   onClick={() => {
-                    history.push(`${root.url}/dangky`);
+                    history.push("/user/dangky");
                   }}
                 >
                   Chi Tiết

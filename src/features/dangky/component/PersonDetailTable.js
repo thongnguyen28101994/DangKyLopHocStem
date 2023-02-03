@@ -82,34 +82,47 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: "name",
+    id: "STT",
     numeric: false,
-    disablePadding: true,
-    label: "Dessert (100g serving)",
+    disablePadding: false,
+    label: "STT",
   },
   {
-    id: "calories",
-    numeric: true,
+    id: "HoTen",
+    numeric: false,
     disablePadding: false,
-    label: "Calories",
+    label: "HoTen",
   },
   {
-    id: "fat",
-    numeric: true,
+    id: "Username",
+    numeric: false,
     disablePadding: false,
-    label: "Fat (g)",
+    label: "TenDangNhap",
   },
   {
-    id: "carbs",
-    numeric: true,
+    id: "Password",
+    numeric: false,
     disablePadding: false,
-    label: "Carbs (g)",
+    label: "MatKhau",
   },
   {
-    id: "protein",
-    numeric: true,
+    id: "SDT",
+    numeric: false,
     disablePadding: false,
-    label: "Protein (g)",
+    label: "Số Điện Thoại",
+  },
+  {
+    id: "Email",
+    numeric: false,
+    disablePadding: false,
+    label: "Email",
+  },
+  {
+    id: "Status",
+    numeric: false,
+    disablePadding: false,
+    isStatus: true,
+    label: "TrangThai",
   },
 ];
 

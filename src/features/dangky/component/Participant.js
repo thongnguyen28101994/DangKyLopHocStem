@@ -11,56 +11,72 @@ export default function Participant() {
       STT: 1,
       HoTen: "Nguyen Van A",
       Username: "admin",
-      Password: "123456",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
+      Password: "*****",
       Status: 2,
     },
     {
       STT: 2,
       HoTen: "Nguyen Van B",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 1,
     },
     {
       STT: 3,
       HoTen: "Nguyen Van C",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 2,
     },
     {
       STT: 4,
       HoTen: "Nguyen Van D",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 1,
     },
     {
       STT: 5,
       HoTen: "Nguyen Van D",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 1,
     },
     {
       STT: 6,
       HoTen: "Nguyen Van D",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 2,
     },
     {
       STT: 7,
       HoTen: "Nguyen Van D",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 2,
     },
     {
       STT: 8,
       HoTen: "Nguyen Van D",
       Username: "admin",
-      Password: "123456",
+      Password: "*****",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 2,
     },
     {
@@ -68,6 +84,8 @@ export default function Participant() {
       HoTen: "Nguyen Van D",
       Username: "admin",
       Password: "123456",
+      SDT: "012345678",
+      Email: "testa@gmail.com",
       Status: 1,
     },
   ];
@@ -95,6 +113,18 @@ export default function Participant() {
       numeric: false,
       disablePadding: false,
       label: "MatKhau",
+    },
+    {
+      id: "SDT",
+      numeric: false,
+      disablePadding: false,
+      label: "Số Điện Thoại",
+    },
+    {
+      id: "Email",
+      numeric: false,
+      disablePadding: false,
+      label: "Email",
     },
     {
       id: "Status",
@@ -126,10 +156,10 @@ export default function Participant() {
               onClick={handleOpenModalClassDetail}
             >
               Thêm Mới
-            </Button>{" "}
-            <Button variant="outlined" size="normal">
-              LƯU
             </Button>
+            {/* <Button variant="outlined" size="normal">
+              LƯU
+            </Button> */}
           </Toolbar>
         </AppBar>
 

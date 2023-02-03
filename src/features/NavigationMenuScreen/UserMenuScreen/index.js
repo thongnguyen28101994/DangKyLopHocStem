@@ -20,10 +20,12 @@ import RegisterForm from "../../dangky";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import ClassesScreen from "../../ClassesScreen";
 import ClassListTable from "../../dangky/component/ClassListTable";
+import Participant from "../../dangky/component/Participant";
 const mdTheme = createTheme();
 
 export default function UserMenuScreen() {
   const root = useRouteMatch();
+  console.log(root);
   const [open, setOpen] = useState(true);
   const handleToggleDrawer = () => {
     setOpen(!open);
@@ -81,15 +83,12 @@ export default function UserMenuScreen() {
                   }}
                 >
                   <SwitchRouter>
+                    <Route path={`${root.path}/dangky`}>
+                      <Participant />
+                    </Route>
                     <Route path={`${root.path}/loptaphuan`}>
                       <ClassListTable />
                     </Route>
-                    <Route path={`${root.path}/dangky`}>
-                      <RegisterForm />
-                    </Route>
-                    {/* <Route path={`${root.path}/lophoc`}>
-                      <ClassesScreen />
-                    </Route> */}
                   </SwitchRouter>
                 </Paper>
               </Grid>
