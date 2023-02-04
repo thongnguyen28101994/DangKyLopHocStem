@@ -1,137 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import EnhancedTable from "../../../component/MaterialDesign/Table/EnhancedTable";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import PersonRegisterModal from "./PersonRegisterModal";
+import { useParams } from "react-router-dom";
+import { CommonApi } from "../../../apis/CommonApi";
 export default function Participant() {
-  const data = [
-    {
-      STT: 1,
-      HoTen: "Nguyen Van A",
-      Username: "admin",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Password: "*****",
-      Status: 2,
-    },
-    {
-      STT: 2,
-      HoTen: "Nguyen Van B",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 1,
-    },
-    {
-      STT: 3,
-      HoTen: "Nguyen Van C",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 2,
-    },
-    {
-      STT: 4,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 1,
-    },
-    {
-      STT: 5,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 1,
-    },
-    {
-      STT: 6,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 2,
-    },
-    {
-      STT: 7,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 2,
-    },
-    {
-      STT: 8,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "*****",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 2,
-    },
-    {
-      STT: 9,
-      HoTen: "Nguyen Van D",
-      Username: "admin",
-      Password: "123456",
-      SDT: "012345678",
-      Email: "testa@gmail.com",
-      Status: 1,
-    },
-  ];
+  const urlParam = useParams();
+  const [participant, SetParticipant] = useState([]);
+  const CallAPIGetParticipant = async () => {
+    const a = JSON.parse(localStorage.getItem("Data"));
+    const response = await CommonApi.getParticipant(
+      a.MA_TRUONG,
+      urlParam.CLASS_ID
+    );
+    SetParticipant(response.Result);
+  };
+  useEffect(() => {
+    CallAPIGetParticipant();
+  }, []);
   const headTable = [
     {
-      id: "STT",
+      id: "MA",
       numeric: false,
       disablePadding: false,
-      label: "STT",
+      label: "Mã Nhân Sự",
     },
     {
-      id: "HoTen",
+      id: "HO_TEN",
       numeric: false,
       disablePadding: false,
-      label: "HoTen",
+      label: "Họ Tên",
     },
     {
-      id: "Username",
+      id: "TEN_DANG_NHAP",
       numeric: false,
       disablePadding: false,
-      label: "TenDangNhap",
+      label: "Tên Đăng Nhập",
     },
     {
-      id: "Password",
+      id: "EMAIL",
       numeric: false,
       disablePadding: false,
-      label: "MatKhau",
+      label: "EMAIL",
     },
     {
-      id: "SDT",
+      id: "SO_CMTND",
       numeric: false,
       disablePadding: false,
-      label: "Số Điện Thoại",
+      label: "Số CCCD/CMND",
     },
     {
-      id: "Email",
+      id: "DI_DONG",
       numeric: false,
       disablePadding: false,
-      label: "Email",
-    },
-    {
-      id: "Status",
-      numeric: false,
-      disablePadding: false,
-      isStatus: true,
-      label: "TrangThai",
+      label: "Điện Thoại",
     },
   ];
   const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
@@ -165,7 +90,7 @@ export default function Participant() {
 
         <Box component="main" sx={{ mt: 1.5 }}>
           <Paper elevation={3}>
-            <EnhancedTable data={data} headTable={headTable} />
+            <EnhancedTable data={participant} headTable={headTable} />
           </Paper>
         </Box>
       </Box>

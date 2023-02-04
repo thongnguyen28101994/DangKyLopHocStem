@@ -1,12 +1,19 @@
 import axios from "axios";
 
-export const createRequest = axios.create({
-  baseURL: process.env.API_BASE_URL,
+export const axiosClient = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+  headers: {
+    "content-type": "application/json",
+  },
   timeout: 1000,
-  transformResponse: [
-    function (data) {
-      console.log(data);
-      return data;
-    },
-  ],
+  // transformResponse: [
+  //   function (data) {
+  //     console.log(data);
+  //     return data;
+  //   },
+  // ],
+});
+axiosClient.interceptors.response.use((response) => {
+  if (response && response.data) return response.data;
+  return response;
 });

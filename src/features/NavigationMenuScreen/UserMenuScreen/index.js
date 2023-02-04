@@ -25,7 +25,6 @@ const mdTheme = createTheme();
 
 export default function UserMenuScreen() {
   const root = useRouteMatch();
-  console.log(root);
   const [open, setOpen] = useState(true);
   const handleToggleDrawer = () => {
     setOpen(!open);
@@ -83,7 +82,7 @@ export default function UserMenuScreen() {
                   }}
                 >
                   <SwitchRouter>
-                    <Route path={`${root.path}/dangky`}>
+                    <Route path={`${root.path}/dangky/:CLASS_ID`}>
                       <Participant />
                     </Route>
                     <Route path={`${root.path}/loptaphuan`}>

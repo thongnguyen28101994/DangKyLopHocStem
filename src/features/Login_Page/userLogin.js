@@ -13,17 +13,21 @@ import {
   Box,
   TextField,
   Button,
+  Autocomplete,
 } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useProvideAuth from "../../ultilities/customHook/useProvideAuth";
 import { useHistory } from "react-router-dom";
+import { CommonApi } from "../../apis/CommonApi";
 export default function UserLogin() {
+  const [districtList, setDistrict] = React.useState([]);
+  const [schoolList, setSchoolList] = React.useState([]);
   const history = useHistory();
   const schema = yup.object({
-    Username: yup.string().required("Username chưa nhập"),
-    password: yup.string().required("Password chưa nhập"),
+    UserName: yup.string().required("UserName chưa nhập"),
+    Password: yup.string().required("Password chưa nhập"),
   });
   const {
     control,
@@ -31,24 +35,39 @@ export default function UserLogin() {
     formState: { errors, isValid },
   } = useForm({
     defaultValues: {
-      quan_huyen: "",
-      Truong: "",
-      Username: "",
-      password: "",
+      DonViID: "",
+      UserName: "",
+      Password: "",
     },
     resolver: yupResolver(schema),
   });
   const useAuth = useProvideAuth();
   const onSubmit = (data) => {
-    useAuth.signin(() => {});
-    history.replace("/user/loptaphuan");
-    // console.log(data);
+    useAuth.signin(async () => {
+      const response = await CommonApi.postGetDataUser([data]);
+      if (response) {
+        console.log(response.Result);
+        localStorage.setItem("Data", JSON.stringify(response.Result[0]));
+        history.replace("/user/loptaphuan");
+      }
+    });
   };
   function checkIsValidField(fieldName) {
     if (isValid) return false;
     if (errors.hasOwnProperty(fieldName)) return true;
     return false;
   }
+  const callAPIGetDMQuanHuyen = async () => {
+    const data = await CommonApi.getDistrict();
+    setDistrict(data.Result);
+  };
+  const callAPIGetDMTruong = async (id) => {
+    const data = await CommonApi.getSchoolByDistrictID(id);
+    setSchoolList(data.Result);
+  };
+  React.useEffect(() => {
+    callAPIGetDMQuanHuyen();
+  }, []);
   return (
     <>
       <Grid
@@ -87,69 +106,71 @@ export default function UserLogin() {
             </Typography>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Controller
-                name="quan_huyen"
+                name="DistrictId"
                 control={control}
-                render={({ field }) => (
+                render={({ field: { onChange, value } }) => (
                   <>
                     <FormControl sx={{ width: "100%", my: 2 }} size={"small"}>
-                      <InputLabel id="quan">Chọn Quận/Huyện</InputLabel>
-                      <Select
-                        // labelId="quan1"
-                        id="demo-simple-select-autowidth"
-                        // onChange={handleChange}
-                        {...field}
-                        label="Chọn Quận Huyện"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Quận 1</MenuItem>
-                        <MenuItem value={21}>Quận 2</MenuItem>
-                        <MenuItem value={22}>Quận 3</MenuItem>
-                      </Select>
+                      <Autocomplete
+                        disableClearable
+                        fullWidth
+                        id="combo-box-demo1"
+                        options={districtList}
+                        getOptionLabel={(district) => district.TEN}
+                        // getOptionSelected={(option, value) =>
+                        //   option.MA === value.MA
+                        // }
+                        onChange={(e, value) => {
+                          callAPIGetDMTruong(value.MA);
+                        }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Quận Huyện" />
+                        )}
+                      />
                     </FormControl>
                   </>
                 )}
               ></Controller>
               <Controller
                 control={control}
-                name="Truong"
-                render={({ field }) => (
+                name="DonViID"
+                render={({ field: { onChange, value } }) => (
                   <>
                     <FormControl sx={{ width: "100%" }} size={"small"}>
-                      <InputLabel id="quan">Tên Trường</InputLabel>
-                      <Select
-                        // labelId="quan1"
-                        id="demo-simple-select-autowidth"
-                        // onChange={handleChange}
-                        size="small"
-                        {...field}
-                        label="Tên Trường"
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Trường A</MenuItem>
-                        <MenuItem value={21}>Trường B</MenuItem>
-                        <MenuItem value={22}>Trường C</MenuItem>
-                      </Select>
+                      <Autocomplete
+                        disableClearable
+                        fullWidth
+                        id="combo-box-demo2"
+                        options={schoolList}
+                        getOptionLabel={(district) => district.TEN}
+                        // getOptionSelected={(option, value) =>
+                        //   option.MA === value.MA
+                        // }
+                        onChange={(e, value) => {
+                          onChange(value.MA);
+                          return value;
+                        }}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Trường" />
+                        )}
+                      />
                     </FormControl>
                   </>
                 )}
               ></Controller>
               <Controller
-                name="Username"
+                name="UserName"
                 control={control}
                 render={({ field }) => (
                   <>
                     <TextField
                       fullWidth
                       margin="normal"
-                      id="Username"
+                      id="UserName"
                       label="Tên Đăng Nhập"
                       variant="outlined"
-                      error={checkIsValidField("Username")}
-                      helperText={errors.Username?.message}
+                      error={checkIsValidField("UserName")}
+                      helperText={errors.UserName?.message}
                       size={"small"}
                       {...field}
                     />
@@ -157,7 +178,7 @@ export default function UserLogin() {
                 )}
               ></Controller>
               <Controller
-                name="password"
+                name="Password"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -166,10 +187,10 @@ export default function UserLogin() {
                       margin="normal"
                       id="Password"
                       label="Mật Khẩu"
-                      type="password"
+                      type="Password"
                       variant="outlined"
-                      error={checkIsValidField("password")}
-                      helperText={errors.password?.message}
+                      error={checkIsValidField("Password")}
+                      helperText={errors.Password?.message}
                       size={"small"}
                       {...field}
                     />

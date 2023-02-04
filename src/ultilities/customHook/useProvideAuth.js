@@ -10,7 +10,7 @@ export default function useProvideAuth() {
   const dispatch = useDispatch();
   const signin = (cb) => {
     dispatch(Login());
-    history.replace(`${root.url}/lophoc`);
+    //history.replace(`${root.url}/lophoc`);
     cb();
     // return async () => {
     //   console.log("a");

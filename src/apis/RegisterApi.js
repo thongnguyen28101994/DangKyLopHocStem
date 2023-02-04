@@ -1,8 +1,8 @@
-import { createRequest } from "./mainConfigAxios";
+import { axiosClient } from "./mainConfigAxios";
 
 export const RegisterApi = {
   getUserData: () => {
     const url = "/User/getUserData";
-    return createRequest.get(url);
+    return axiosClient.get(url);
   },
 };

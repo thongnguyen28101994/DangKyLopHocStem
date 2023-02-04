@@ -8,28 +8,24 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import { useHistory, useRouteMatch } from "react-router-dom";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-console.log("da toi day");
-const rows = [
-  createData(1, "Lớp tập huấn a", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn b", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn c", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn d", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn e", "10/02/2023", "10/03/2023"),
-];
+import { CommonApi } from "../../../apis/CommonApi";
 
 export default function ClassListTable({ handleOpenModalClassDetail }) {
   const history = useHistory();
   const root = useRouteMatch();
+  const [classList, setClassList] = React.useState([]);
+  const callAPIGetClassList = async () => {
+    const response = await CommonApi.getClassList();
+    setClassList(response.Result);
+  };
+  React.useEffect(() => {
+    callAPIGetClassList();
+  }, []);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Mã Lớp</TableCell>
             <TableCell align="left">Tên Lớp</TableCell>
             <TableCell align="left">Thời Gian Bắt Đầu</TableCell>
             <TableCell align="left">Thời Gian Kết Thúc</TableCell>
@@ -37,31 +33,33 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="left">{row.calories}</TableCell>
-              <TableCell align="left">{row.fat}</TableCell>
-              <TableCell align="left">{row.carbs}</TableCell>
-              <TableCell align="left">
-                <Button
-                  variant="outlined"
-                  size="medium"
-                  color="warning"
-                  onClick={() => {
-                    history.push("/user/dangky");
-                  }}
-                >
-                  Chi Tiết
-                </Button>{" "}
-              </TableCell>
-            </TableRow>
-          ))}
+          {classList.map((val) => {
+            return (
+              <TableRow
+                key={val.ID}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" align="left">
+                  {val.CLASS_NAME}
+                </TableCell>
+                <TableCell align="left">{val.TIME_START_AT}</TableCell>
+                <TableCell align="left">{val.TIME_END_AT}</TableCell>
+                <TableCell align="left">
+                  <Button
+                    variant="outlined"
+                    size="medium"
+                    color="warning"
+                    onClick={() => {
+                      const v = JSON.parse(localStorage.getItem("Data"));
+                      history.push(`/user/dangky/${val.ID}`);
+                    }}
+                  >
+                    Chi Tiết
+                  </Button>{" "}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

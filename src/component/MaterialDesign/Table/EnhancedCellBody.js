@@ -33,10 +33,10 @@ export default function EnhancedCellBody(props) {
       })} */}
       <Zoom in={true} timeout={500}>
         <Chip
-          clickable={true}
+          clickable={false}
           variant="outlined"
           color={changeData.color || "default"}
-          onClick={() => handleClick(data)}
+          // onClick={() => handleClick(data)}
           label={changeData.label || ""}
         />
       </Zoom>

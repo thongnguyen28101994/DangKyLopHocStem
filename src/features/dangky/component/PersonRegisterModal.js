@@ -12,26 +12,27 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import PersonDetailTable from "./PersonDetailTable";
 export default function PersonRegisterModal({ isOpen, handleClose }) {
   return (
-    <div>
-      <Dialog
-        open={isOpen}
-        onClose={handleClose}
-        fullWidth={true}
-        maxWidth={"lg"}
-      >
-        {/* <DialogTitle>Danh Sách Giáo Viên</DialogTitle> */}
-        <DialogContent>
-          {/* <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText> */}
-          <PersonDetailTable />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Huỷ</Button>
-          <Button onClick={handleClose}>Lưu</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    // <div>
+    //   <Dialog
+    //     open={isOpen}
+    //     onClose={handleClose}
+    //     fullWidth={true}
+    //     maxWidth={"lg"}
+    //   >
+    //     {/* <DialogTitle>Danh Sách Giáo Viên</DialogTitle> */}
+    //     <DialogContent>
+    //       {/* <DialogContentText>
+    //         To subscribe to this website, please enter your email address here.
+    //         We will send updates occasionally.
+    //       </DialogContentText> */}
+
+    //     </DialogContent>
+    //     <DialogActions>
+    //       <Button onClick={handleClose}>Huỷ</Button>
+    //       <Button onClick={handleClose}>Lưu</Button>
+    //     </DialogActions>
+    //   </Dialog>
+    // </div>
+    <PersonDetailTable isOpen={isOpen} />
   );
 }
