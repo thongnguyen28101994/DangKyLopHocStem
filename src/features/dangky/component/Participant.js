@@ -58,6 +58,12 @@ export default function Participant() {
       disablePadding: false,
       label: "Điện Thoại",
     },
+    {
+      id: "TRANG_THAI_DONG_TIEN",
+      numeric: false,
+      disablePadding: false,
+      label: "Thanh Toán",
+    },
   ];
   const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
   const handleCloseModalClassDetail = () => {
@@ -95,6 +101,7 @@ export default function Participant() {
         </Box>
       </Box>
       <PersonRegisterModal
+        FGetParticipant={CallAPIGetParticipant}
         isOpen={isModalClassDetailOpen}
         handleClose={handleCloseModalClassDetail}
       />

@@ -23,7 +23,7 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-
+import { useParams } from "react-router-dom";
 const headCells = [
   {
     id: "MA",
@@ -171,7 +171,12 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function PersonDetailTable({ isOpen, handleClose }) {
+export default function PersonDetailTable({
+  isOpen,
+  handleClose,
+  FGetParticipant,
+}) {
+  const urlParam = useParams();
   const d = JSON.parse(localStorage.getItem("Data"));
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -191,7 +196,7 @@ export default function PersonDetailTable({ isOpen, handleClose }) {
   };
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.name);
+      const newSelected = rows.map((n) => n.MA);
       setSelected(newSelected);
       return;
     }
@@ -201,7 +206,7 @@ export default function PersonDetailTable({ isOpen, handleClose }) {
     if (isOpen) {
       CallAPIGetAllNguoiDungByDonViID();
     }
-  }, []);
+  }, [isOpen]);
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -224,9 +229,21 @@ export default function PersonDetailTable({ isOpen, handleClose }) {
     const newData = [];
     selected.map((value) => {
       let v = rows.find((x) => x.MA === value);
+      v.CLASS_ID = parseInt(urlParam.CLASS_ID);
+      v.DonViID = d.MA_TRUONG;
       newData.push(v);
     });
-    console.log(newData);
+    CallAPIPostRegisterParticipant(newData);
+  };
+  const CallAPIPostRegisterParticipant = async (param) => {
+    const response = await CommonApi.postRegisterParticipant(param);
+    if (response && response.StatusCode == 200) {
+      await FGetParticipant();
+      setSelected([]);
+      handleClose();
+    } else {
+      alert(response?.Message);
+    }
   };
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -331,15 +348,15 @@ export default function PersonDetailTable({ isOpen, handleClose }) {
                 </TableBody>
               </Table>
             </TableContainer>
-            {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
           </Paper>
         </Box>
       </DialogContent>

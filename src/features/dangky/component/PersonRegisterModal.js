@@ -10,7 +10,11 @@ import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import PersonDetailTable from "./PersonDetailTable";
-export default function PersonRegisterModal({ isOpen, handleClose }) {
+export default function PersonRegisterModal({
+  isOpen,
+  handleClose,
+  FGetParticipant,
+}) {
   return (
     // <div>
     //   <Dialog
@@ -33,6 +37,10 @@ export default function PersonRegisterModal({ isOpen, handleClose }) {
     //     </DialogActions>
     //   </Dialog>
     // </div>
-    <PersonDetailTable isOpen={isOpen} />
+    <PersonDetailTable
+      isOpen={isOpen}
+      handleClose={handleClose}
+      FGetParticipant={FGetParticipant}
+    />
   );
 }

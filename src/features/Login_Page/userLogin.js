@@ -45,10 +45,11 @@ export default function UserLogin() {
   const onSubmit = (data) => {
     useAuth.signin(async () => {
       const response = await CommonApi.postGetDataUser([data]);
-      if (response) {
-        console.log(response.Result);
+      if (response && response.Result?.length > 0) {
         localStorage.setItem("Data", JSON.stringify(response.Result[0]));
         history.replace("/user/loptaphuan");
+      } else {
+        alert(response.Message);
       }
     });
   };
