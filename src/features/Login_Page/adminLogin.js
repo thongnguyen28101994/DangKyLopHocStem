@@ -15,6 +15,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useProvideAuth from "../../ultilities/customHook/useProvideAuth";
 import { useHistory } from "react-router-dom";
+import { CommonApi } from "../../apis/CommonApi";
+import hinh2 from "../../img/hinh2.jpeg";
 export default function AdminLogin() {
   const schema = yup.object({
     Username: yup.string().required("Username chưa nhập"),
@@ -43,10 +45,16 @@ export default function AdminLogin() {
   const history = useHistory();
   const useAuth = useProvideAuth();
   const onSubmit = (data) => {
-    useAuth.signin(() => {
-      history.replace(`/admin/lophoc`);
-    });
-    // console.log(data);
+    // useAuth.signin(async () => {
+    //   const response = await CommonApi.postLoginAdmin([data]);
+    //   if (response && response.Result?.length > 0) {
+    //     localStorage.setItem("Data", JSON.stringify(response.Result[0]));
+    //     history.replace(`/admin/lophoc`);
+    //   } else {
+    //     alert(response.Message);
+    //   }
+    // });
+    console.log(data);
   };
   function checkIsValidField(fieldName) {
     if (isValid) return false;
@@ -63,7 +71,7 @@ export default function AdminLogin() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: `url(${hinh2})`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -95,7 +103,7 @@ export default function AdminLogin() {
                     <TextField
                       fullWidth
                       margin="normal"
-                      id="Username"
+                      id="TEN_DANG_NHAP"
                       label="Tên Đăng Nhập"
                       variant="outlined"
                       error={checkIsValidField("Username")}
@@ -113,7 +121,7 @@ export default function AdminLogin() {
                     <TextField
                       fullWidth
                       margin="normal"
-                      id="Password"
+                      id="MAT_KHAU"
                       label="Mật Khẩu"
                       type="password"
                       variant="outlined"

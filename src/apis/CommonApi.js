@@ -9,8 +9,12 @@ export const CommonApi = {
     const url = `/GetDMTruong/${id}`;
     return axiosClient.get(url);
   },
-  postGetDataUser: (user) => {
+  postLoginUser: (user) => {
     const url = `/LoginForUser`;
+    return axiosClient.post(url, user);
+  },
+  postLoginAdmin: (user) => {
+    const url = "/LoginForAdmin";
     return axiosClient.post(url, user);
   },
   getClassList: () => {

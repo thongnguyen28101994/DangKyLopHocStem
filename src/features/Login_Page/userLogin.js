@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import hinh1 from "../../img/hinh1.jpeg";
 import FormControl from "@mui/material/FormControl";
 import {
   Typography,
@@ -44,7 +45,7 @@ export default function UserLogin() {
   const useAuth = useProvideAuth();
   const onSubmit = (data) => {
     useAuth.signin(async () => {
-      const response = await CommonApi.postGetDataUser([data]);
+      const response = await CommonApi.postLoginUser([data]);
       if (response && response.Result?.length > 0) {
         localStorage.setItem("Data", JSON.stringify(response.Result[0]));
         history.replace("/user/loptaphuan");
@@ -76,7 +77,7 @@ export default function UserLogin() {
         component="main"
         sx={{
           height: "100vh",
-          backgroundImage: "url(https://source.unsplash.com/random)",
+          backgroundImage: `url(${hinh1})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center",
