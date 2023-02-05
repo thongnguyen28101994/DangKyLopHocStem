@@ -31,7 +31,7 @@ export default function ClassDetailModal({ isOpen, handleClose }) {
               renderInput={(props) => (
                 <TextField {...props} fullWidth margin="normal" />
               )}
-              label="Ngày Bắt Đầu"
+              label="Ngày Kết Thúc Đăng Ký"
               // value={value}
               //   onChange={(newValue) => {
               //     setValue(newValue);
@@ -41,7 +41,7 @@ export default function ClassDetailModal({ isOpen, handleClose }) {
               renderInput={(props) => (
                 <TextField {...props} fullWidth margin="normal" />
               )}
-              label="Ngày Kết Thúc"
+              label="Ngày Kết Thúc Đóng Tiền"
               // value={value}
               //   onChange={(newValue) => {
               //     setValue(newValue);

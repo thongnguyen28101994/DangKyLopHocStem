@@ -7,20 +7,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData(1, "Lớp tập huấn a", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn b", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn c", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn d", "10/02/2023", "10/03/2023"),
-  createData(1, "Lớp tập huấn e", "10/02/2023", "10/03/2023"),
-];
+import { useHistory, useRouteMatch } from "react-router-dom";
+import { CommonApi } from "../../../apis/CommonApi";
 
 export default function ClassList({ handleOpenModalClassDetail }) {
+  const history = useHistory();
+  const root = useRouteMatch();
+  const [classList, setClassList] = React.useState([]);
+  const callAPIGetClassList = async () => {
+    const response = await CommonApi.getClassList();
+    setClassList(response.Result);
+  };
+  React.useEffect(() => {
+    callAPIGetClassList();
+  }, []);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -28,24 +28,39 @@ export default function ClassList({ handleOpenModalClassDetail }) {
           <TableRow>
             <TableCell>Mã Lớp</TableCell>
             <TableCell align="left">Tên Lớp</TableCell>
-            <TableCell align="left">Thời Gian Bắt Đầu</TableCell>
-            <TableCell align="left">Thời Gian Kết Thúc</TableCell>
+            <TableCell align="left">Thời Gian Kết Thúc Đăng Ký</TableCell>
+            <TableCell align="left">Thời Gian Kết Thúc Đóng Tiền</TableCell>
             <TableCell align="center">Thao Tác</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {classList.map((row) => (
             <TableRow
-              key={row.name}
+              key={row.CLASS_NAME}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {row.name}
+              <TableCell component="th" align="left">
+                {row.ID}
               </TableCell>
-              <TableCell align="left">{row.calories}</TableCell>
-              <TableCell align="left">{row.fat}</TableCell>
-              <TableCell align="left">{row.carbs}</TableCell>
-              <TableCell align="left">
+              <TableCell component="th" align="left">
+                {row.CLASS_NAME}
+              </TableCell>
+              <TableCell align="left">{row.TIME_START_AT}</TableCell>
+              <TableCell align="left">{row.TIME_END_AT}</TableCell>
+              {/* <TableCell align="left">
+                  <Button
+                    variant="outlined"
+                    size="medium"
+                    color="warning"
+                    onClick={() => {
+                      const v = JSON.parse(localStorage.getItem("Data"));
+                      history.push(`/user/dangky/${val.ID}`);
+                    }}
+                  >
+                    Chi Tiết
+                  </Button>{" "}
+                </TableCell> */}
+              <TableCell>
                 <Button
                   variant="outlined"
                   size="medium"

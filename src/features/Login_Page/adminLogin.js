@@ -19,8 +19,8 @@ import { CommonApi } from "../../apis/CommonApi";
 import hinh2 from "../../img/hinh2.jpeg";
 export default function AdminLogin() {
   const schema = yup.object({
-    Username: yup.string().required("Username chưa nhập"),
-    password: yup.string().required("Password chưa nhập"),
+    TEN_DANG_NHAP: yup.string().required("Username chưa nhập"),
+    MAT_KHAU: yup.string().required("Password chưa nhập"),
   });
   const {
     control,
@@ -28,33 +28,23 @@ export default function AdminLogin() {
     formState: { errors, dirtyFields, touchedFields, isValid },
   } = useForm({
     defaultValues: {
-      Username: "",
-      password: "",
+      TEN_DANG_NHAP: "",
+      MAT_KHAU: "",
     },
     resolver: yupResolver(schema),
   });
-  // const onSubmit = (data) => console.log(data);
-  // console.log(errors);
-  // function checkIsValidValue(fieldName) {
-  //   if (!touchedFields?.[fieldName]) return false;
-  //   if (touchedFields?.[fieldName]) {
-  //     if (!dirtyFields?.[fieldName]) return true;
-  //     return false;
-  //   }
-  // }
   const history = useHistory();
   const useAuth = useProvideAuth();
   const onSubmit = (data) => {
-    // useAuth.signin(async () => {
-    //   const response = await CommonApi.postLoginAdmin([data]);
-    //   if (response && response.Result?.length > 0) {
-    //     localStorage.setItem("Data", JSON.stringify(response.Result[0]));
-    //     history.replace(`/admin/lophoc`);
-    //   } else {
-    //     alert(response.Message);
-    //   }
-    // });
-    console.log(data);
+    useAuth.signin(async () => {
+      const response = await CommonApi.postLoginAdmin([data]);
+      if (response && response.Result?.length > 0) {
+        localStorage.setItem("DataAdmin", JSON.stringify(response.Result[0]));
+        history.replace(`/admin/lophoc`);
+      } else {
+        alert("Tên đăng nhập hoặc mật khẩu không đúng");
+      }
+    });
   };
   function checkIsValidField(fieldName) {
     if (isValid) return false;
@@ -96,7 +86,7 @@ export default function AdminLogin() {
               style={{ width: "100%", padding: "0 2rem" }}
             >
               <Controller
-                name="Username"
+                name="TEN_DANG_NHAP"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -106,15 +96,15 @@ export default function AdminLogin() {
                       id="TEN_DANG_NHAP"
                       label="Tên Đăng Nhập"
                       variant="outlined"
-                      error={checkIsValidField("Username")}
-                      helperText={errors.Username?.message}
+                      error={checkIsValidField("TEN_DANG_NHAP")}
+                      helperText={errors.TEN_DANG_NHAP?.message}
                       {...field}
                     />
                   </>
                 )}
               ></Controller>
               <Controller
-                name="password"
+                name="MAT_KHAU"
                 control={control}
                 render={({ field }) => (
                   <>
@@ -125,8 +115,8 @@ export default function AdminLogin() {
                       label="Mật Khẩu"
                       type="password"
                       variant="outlined"
-                      error={checkIsValidField("password")}
-                      helperText={errors.password?.message}
+                      error={checkIsValidField("MAT_KHAU")}
+                      helperText={errors.MAT_KHAU?.message}
                       {...field}
                     />
                   </>
