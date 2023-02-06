@@ -34,7 +34,7 @@ export default function UserMenuScreen() {
       <Box sx={{ display: "flex" }}>
         <CssBaseline />
         <LoginAppBar
-          title={"Trang Dành Cho User "}
+          title={" "}
           open={open}
           handleToggleDrawer={handleToggleDrawer}
         />

@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
-
+import moment from "moment";
 export default function ClassListTable({ handleOpenModalClassDetail }) {
   const history = useHistory();
   const root = useRouteMatch();
@@ -27,13 +27,18 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
         <TableHead>
           <TableRow>
             <TableCell align="left">Tên Lớp</TableCell>
-            <TableCell align="left">Thời Gian Bắt Đầu</TableCell>
-            <TableCell align="left">Thời Gian Kết Thúc</TableCell>
+            <TableCell align="left">Hạn Kết Thúc Đăng Ký</TableCell>
+            <TableCell align="left">Hạn Đóng Học Phí</TableCell>
+            <TableCell align="left">Ghi Chú</TableCell>
             <TableCell align="center">Thao Tác</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {classList.map((val) => {
+            const formatStartDate = moment(val.TIME_START_AT).format(
+              "DD/MM/YYYY"
+            );
+            const formatEnDate = moment(val.TIME_END_AT).format("DD/MM/YYYY");
             return (
               <TableRow
                 key={val.ID}
@@ -42,8 +47,9 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
                 <TableCell component="th" align="left">
                   {val.CLASS_NAME}
                 </TableCell>
-                <TableCell align="left">{val.TIME_START_AT}</TableCell>
-                <TableCell align="left">{val.TIME_END_AT}</TableCell>
+                <TableCell align="left">{formatStartDate}</TableCell>
+                <TableCell align="left">{formatEnDate}</TableCell>
+                <TableCell align="left">{val.NOTE}</TableCell>
                 <TableCell align="left">
                   <Button
                     variant="outlined"
