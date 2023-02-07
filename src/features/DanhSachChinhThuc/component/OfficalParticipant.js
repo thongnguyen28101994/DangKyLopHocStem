@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import EnhancedTable from "../../../component/MaterialDesign/Table/EnhancedTable";
-import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
-import PersonRegisterModal from "./PersonRegisterModal";
 import { useParams } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
-export default function Participant() {
+export default function OfficalParticipant() {
   const urlParam = useParams();
   const [participant, SetParticipant] = useState([]);
   const CallAPIGetParticipant = async () => {
     const a = JSON.parse(localStorage.getItem("Data"));
-    const response = await CommonApi.getParticipant(
+    const response = await CommonApi.getOfficialParticipant(
       a.MA_TRUONG,
       urlParam.CLASS_ID
     );
@@ -53,12 +51,6 @@ export default function Participant() {
       disablePadding: false,
       label: "EMAIL",
     },
-    // {
-    //   id: "SO_CMTND",
-    //   numeric: false,
-    //   disablePadding: false,
-    //   label: "Số CCCD/CMND",
-    // },
     {
       id: "DI_DONG",
       numeric: false,
@@ -72,32 +64,14 @@ export default function Participant() {
       label: "Thanh Toán",
     },
   ];
-  const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
-  const handleCloseModalClassDetail = () => {
-    setModalClassOpen(false);
-  };
-  const handleOpenModalClassDetail = () => {
-    setModalClassOpen(true);
-  };
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <AppBar position="static" component="nav" color="transparent">
           <Toolbar sx={{ display: "flex" }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Đăng Ký Tập Huấn
+              Danh Sách Chính Thức
             </Typography>
-            <Button
-              variant="outlined"
-              size="normal"
-              sx={{ marginRight: "5px" }}
-              onClick={handleOpenModalClassDetail}
-            >
-              Thêm Mới
-            </Button>
-            {/* <Button variant="outlined" size="normal">
-              LƯU
-            </Button> */}
           </Toolbar>
         </AppBar>
 
@@ -107,11 +81,6 @@ export default function Participant() {
           </Paper>
         </Box>
       </Box>
-      <PersonRegisterModal
-        FGetParticipant={CallAPIGetParticipant}
-        isOpen={isModalClassDetailOpen}
-        handleClose={handleCloseModalClassDetail}
-      />
     </>
   );
 }

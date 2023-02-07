@@ -29,6 +29,11 @@ export const CommonApi = {
     const url = `/GetParticipant/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
+  getOfficialParticipant: (DonViID, CLASS_ID) => {
+    const url = `/GetOfficialParticipant/${DonViID}/${CLASS_ID}`;
+    return axiosClient.get(url);
+  },
+
   postRegisterParticipant: (param) => {
     const url = `/RegisterClass`;
     return axiosClient.post(url, param);

@@ -49,12 +49,12 @@ const headCells = [
     disablePadding: false,
     label: "EMAIL",
   },
-  {
-    id: "SO_CMTND",
-    numeric: false,
-    disablePadding: false,
-    label: "Số CCCD/CMND",
-  },
+  //   {
+  //     id: "SO_CMTND",
+  //     numeric: false,
+  //     disablePadding: false,
+  //     label: "Số CCCD/CMND",
+  //   },
   {
     id: "DI_DONG",
     numeric: false,
@@ -318,6 +318,7 @@ export default function PersonDetailTable({
                               }}
                             />
                           </TableCell>
+
                           <TableCell
                             component="th"
                             id={labelId}
@@ -331,7 +332,7 @@ export default function PersonDetailTable({
                             {row.TEN_DANG_NHAP}
                           </TableCell>
                           <TableCell align="right">{row.EMAIL}</TableCell>
-                          <TableCell align="right">{row.SO_CMTND}</TableCell>
+                          {/* <TableCell align="right">{row.SO_CMTND}</TableCell> */}
                           <TableCell align="right">{row.DI_DONG}</TableCell>
                         </TableRow>
                       );

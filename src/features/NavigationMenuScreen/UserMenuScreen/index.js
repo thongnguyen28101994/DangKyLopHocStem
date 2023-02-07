@@ -21,6 +21,8 @@ import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import ClassesScreen from "../../ClassesScreen";
 import ClassListTable from "../../dangky/component/ClassListTable";
 import Participant from "../../dangky/component/Participant";
+import OfficialRegistrationList from "../../DanhSachChinhThuc";
+import OfficialParticipant from "../../DanhSachChinhThuc/component/OfficalParticipant";
 const mdTheme = createTheme();
 
 export default function UserMenuScreen() {
@@ -87,6 +89,15 @@ export default function UserMenuScreen() {
                     </Route>
                     <Route path={`${root.path}/loptaphuan`}>
                       <ClassListTable />
+                    </Route>
+                    <Route exact path={`${root.path}/danhsachchinhthuc`}>
+                      <OfficialRegistrationList />
+                    </Route>
+                    <Route
+                      exact
+                      path={`${root.path}/danhsachchinhthuc/:CLASS_ID`}
+                    >
+                      <OfficialParticipant />
                     </Route>
                   </SwitchRouter>
                 </Paper>

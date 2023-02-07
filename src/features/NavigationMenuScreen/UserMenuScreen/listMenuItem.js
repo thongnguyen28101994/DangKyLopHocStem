@@ -1,6 +1,7 @@
 import * as React from "react";
 import ListSubheader from "@mui/material/ListSubheader";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -20,8 +21,13 @@ export const MainListItems = () => {
       ></ListItemLink> */}
       <ListItemLink
         to={`${root.url}/loptaphuan`}
-        primary={"Đăng Ký Tập Huấn"}
+        primary={"Danh Sách Đăng Ký"}
         icon={<DashboardIcon />}
+      ></ListItemLink>
+      <ListItemLink
+        to={`${root.url}/danhsachchinhthuc`}
+        primary={"Danh Sách Chính Thức"}
+        icon={<SummarizeIcon />}
       ></ListItemLink>
       {/* <ListItemButton>
       <ListItemIcon>
