@@ -5,7 +5,6 @@ export const axiosClient = axios.create({
   headers: {
     "content-type": "application/json",
   },
-  timeout: 1000,
   // transformResponse: [
   //   function (data) {
   //     console.log(data);
