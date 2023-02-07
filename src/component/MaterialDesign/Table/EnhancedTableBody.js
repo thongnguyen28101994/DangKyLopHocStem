@@ -22,6 +22,7 @@ export default function EnhancedTableBody(props) {
             {headTable.map((head, index) => {
               return (
                 <EnhancedCellBody
+                  {...props}
                   key={index}
                   data={row[head.id]}
                   isStatus={head.isStatus}

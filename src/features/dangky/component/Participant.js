@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 
-import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Paper,
+  Snackbar,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Box } from "@mui/system";
 import EnhancedTable from "../../../component/MaterialDesign/Table/EnhancedTable";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
@@ -10,6 +17,7 @@ import { CommonApi } from "../../../apis/CommonApi";
 export default function Participant() {
   const urlParam = useParams();
   const [participant, SetParticipant] = useState([]);
+  const [openMessage, setOpenMessage] = useState(false);
   const CallAPIGetParticipant = async () => {
     const a = JSON.parse(localStorage.getItem("Data"));
     const response = await CommonApi.getParticipant(
@@ -71,6 +79,13 @@ export default function Participant() {
       disablePadding: false,
       label: "Thanh Toán",
     },
+    {
+      id: "",
+      numeric: false,
+      disablePadding: false,
+      label: "Thao Tác",
+      isStatus: true,
+    },
   ];
   const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
   const handleCloseModalClassDetail = () => {
@@ -78,6 +93,16 @@ export default function Participant() {
   };
   const handleOpenModalClassDetail = () => {
     setModalClassOpen(true);
+  };
+  const handleRemoveParticipant = async (item) => {
+    const response = await CommonApi.getRemoveParticipatn(item);
+    if (response.StatusCode === 200) {
+      alert("Xoá Thành Công");
+
+      CallAPIGetParticipant();
+    } else {
+      alert(response.Result);
+    }
   };
   return (
     <>
@@ -103,7 +128,11 @@ export default function Participant() {
 
         <Box component="main" sx={{ mt: 1.5 }}>
           <Paper elevation={3}>
-            <EnhancedTable data={participant} headTable={headTable} />
+            <EnhancedTable
+              data={participant}
+              headTable={headTable}
+              handleRemoveList={handleRemoveParticipant}
+            />
           </Paper>
         </Box>
       </Box>
@@ -112,6 +141,13 @@ export default function Participant() {
         isOpen={isModalClassDetailOpen}
         handleClose={handleCloseModalClassDetail}
       />
+      {/* <Snackbar
+        anchorOrigin={"top,center"}
+        open={openMessage}
+        // onClose={handleClose}
+        message="I love snacks"
+        key={"top" + "center"}
+      /> */}
     </>
   );
 }

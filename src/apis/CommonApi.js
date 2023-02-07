@@ -38,4 +38,8 @@ export const CommonApi = {
     const url = `/RegisterClass`;
     return axiosClient.post(url, param);
   },
+  getRemoveParticipatn: (id) => {
+    const url = `/DeleteParticipant/${id}`;
+    return axiosClient.get(url);
+  },
 };

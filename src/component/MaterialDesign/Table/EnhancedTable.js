@@ -12,6 +12,7 @@ export default function EnhancedTable(props) {
       <Table stickyHeader aria-label="sticky table">
         <EnhancedTableHead headTable={headTable} />
         <EnhancedTableBody
+          {...props}
           data={data}
           headTable={headTable}
           HandleRowChange={HandleRowChange}

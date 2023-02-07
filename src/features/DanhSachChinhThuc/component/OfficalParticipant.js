@@ -61,7 +61,7 @@ export default function OfficalParticipant() {
       id: "TRANG_THAI_DONG_TIEN",
       numeric: false,
       disablePadding: false,
-      label: "Thanh Toán",
+      label: "Trạng Thái",
     },
   ];
   return (
