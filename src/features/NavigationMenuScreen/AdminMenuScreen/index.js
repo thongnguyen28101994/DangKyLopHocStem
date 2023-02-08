@@ -20,7 +20,8 @@ import RegisterForm from "../../dangky";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import ClassesScreen from "../../ClassesScreen";
 import Participant from "../../dangky/component/Participant";
-import ListParticipantUnpaid from "../../DanhSachTapHuan/component/ListParticipantUnpaid";
+import ListParticipantPaid from "../../DanhSachTapHuan/component/ListParticipantPaid";
+import ListParticipantIsRegister from "../../DanhSachDaXepLop/component/ListParticipantIsRegister";
 const mdTheme = createTheme();
 
 export default function AdminMenuScreen() {
@@ -82,14 +83,14 @@ export default function AdminMenuScreen() {
                   }}
                 >
                   <SwitchRouter>
-                    <Route path={`${root.path}/dangky`}>
-                      <Participant />
-                    </Route>
                     <Route path={`${root.path}/lophoc`}>
                       <ClassesScreen />
                     </Route>
-                    <Route path={`${root.path}/chuathanhtoan`}>
-                      <ListParticipantUnpaid />
+                    <Route path={`${root.path}/thanhtoan`}>
+                      <ListParticipantPaid />
+                    </Route>
+                    <Route path={`${root.path}/daxeplop`}>
+                      <ListParticipantIsRegister />
                     </Route>
                   </SwitchRouter>
                 </Paper>

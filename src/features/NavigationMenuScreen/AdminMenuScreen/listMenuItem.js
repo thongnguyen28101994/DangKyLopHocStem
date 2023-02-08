@@ -19,13 +19,13 @@ export const MainListItems = () => {
         icon={<DashboardIcon />}
       ></ListItemLink>
       <ListItemLink
-        to={`${root.url}/dangky`}
-        primary={"Danh Sách Đăng Ký"}
+        to={`${root.url}/thanhtoan`}
+        primary={"Danh Sách Thanh Toán"}
         icon={<DashboardIcon />}
       ></ListItemLink>
       <ListItemLink
-        to={`${root.url}/chuathanhtoan`}
-        primary={"Danh Sách Thanh Toán"}
+        to={`${root.url}/daxeplop`}
+        primary={"Danh Sách Xếp Lớp"}
         icon={<DashboardIcon />}
       ></ListItemLink>
       {/* <ListItemButton>

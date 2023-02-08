@@ -23,17 +23,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { useParams } from "react-router-dom";
-import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import {
   AppBar,
   Autocomplete,
   TextField,
 } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import moment from "moment";
 const headCells = [
   {
     id: "MA",
@@ -198,23 +192,6 @@ export default function PersonDetailTable({
   const [schoolList, setSchoolList] = React.useState([]);
   const [SchoolID, setSchoolID] = React.useState("");
   const [classList, setClassList] = React.useState([]);
-  const [selectedDate,SetselectedDate]= React.useState(moment().format());
-  
-  const schema = yup.object({
-    NGAY_DONG_TIEN: yup.string().required("Chưa Nhập Ngày Thanh Toán"),
-  });
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isValid },
-    setValue,
-  } = useForm({
-    defaultValues: {
-      NGAY_DONG_TIEN: "",
-    },
-
-    resolver: yupResolver(schema),
-  });
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -242,7 +219,7 @@ export default function PersonDetailTable({
   }, []);
   const handleFindSchoolID = async () => {
     
-    const response = await CommonApi.getOfficialParticipantUnpaid(SchoolID.SchoolID,SchoolID.CLASS_ID);
+    const response = await CommonApi.getOfficialParticipantNotRegister(SchoolID.SchoolID,SchoolID.CLASS_ID);
     if(response.StatusCode===200)
     {
       setRows(response.Result)
@@ -266,19 +243,19 @@ export default function PersonDetailTable({
     }
     setSelected(newSelected);
   };
-  const handleSubmitData = () => {
+  const handleSubmit = () => {
     const newData = [];
     selected.map((value) => {
       let v = rows.find((x) => x.MA === value);
-      v.NGAY_DONG_TIEN=moment(selectedDate,"DD/MM/YYYY").format("YYYY-MM-DD");
+      v.NGAY_DONG_TIEN="2022-02-15";
       newData.push(v);
     });
     CallAPIPostParticipantPaid(newData);
   };
   const CallAPIPostParticipantPaid = async (param) => {
-    const response = await CommonApi.postChangeStatusToPaid(param);
+    const response = await CommonApi.postChangeStatusToRegisted(param);
     if (response && response.StatusCode === 200) {
-      await FGetParticipant(param[0].DonViID,param[0].CLASS_ID);
+      await FGetParticipant();
       setSelected([]);
       handleClose();
     } else {
@@ -317,7 +294,6 @@ export default function PersonDetailTable({
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              alignContent:"center"
             }}
           >
             <Box
@@ -384,28 +360,6 @@ export default function PersonDetailTable({
               >
                 Tìm Kiếm
               </Button>
-             
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DatePicker
-              value={""}
-                    inputFormat="DD/MM/YYYY"
-                    onChange={(e,value) => {
-                        SetselectedDate(value)
-                    }}
-                    renderInput={(props) => (
-                      <>
-                        <TextField
-                          {...props}
-                          size="small"
-                          margin="normal"
-                        
-                        />
-                      </>
-                    )}
-                    label="Thời hạn thanh toán"
-                  />
-              </LocalizationProvider>
-            
             </Box>
             {/* <Box>
               <Button variant="outlined" size="normal">
@@ -505,7 +459,7 @@ export default function PersonDetailTable({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Huỷ</Button>
-        <Button onClick={handleSubmitData}>Lưu</Button>
+        <Button onClick={handleSubmit}>Lưu</Button>
       </DialogActions>
     </Dialog>
   );
