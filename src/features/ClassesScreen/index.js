@@ -4,6 +4,7 @@ import { AppBar, Button, Paper, Toolbar, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ClassList from "./component/ClassList";
 import ClassDetailModal from "./component/ClassDetailModal";
+import { CommonApi } from "../../apis/CommonApi";
 export default function ClassesScreen() {
   const [isModalClassDetailOpen, setModalClassOpen] = useState(false);
   const handleCloseModalClassDetail = () => {
@@ -12,6 +13,14 @@ export default function ClassesScreen() {
   const handleOpenModalClassDetail = () => {
     setModalClassOpen(true);
   };
+  const [classList, setClassList] = React.useState([]);
+  const callAPIGetClassList = async () => {
+    const response = await CommonApi.getClassList();
+    setClassList(response.Result);
+  };
+  React.useEffect(() => {
+    callAPIGetClassList();
+  }, []);
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -35,13 +44,16 @@ export default function ClassesScreen() {
           <Paper elevation={3}>
             <ClassList
               handleOpenModalClassDetail={handleOpenModalClassDetail}
+              Class={classList}
+              handleReload={callAPIGetClassList}
             />
           </Paper>
         </Box>
       </Box>
       <ClassDetailModal
-        isOpen={isModalClassDetailOpen}
         isCreate={true}
+        isOpen={isModalClassDetailOpen}
+        handleReload={callAPIGetClassList}
         handleClose={handleCloseModalClassDetail}
       />
     </>

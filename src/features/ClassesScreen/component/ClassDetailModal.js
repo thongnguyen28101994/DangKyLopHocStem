@@ -13,7 +13,8 @@ import * as yup from "yup";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CommonApi } from "../../../apis/CommonApi";
-export default function ClassDetailModal({ isOpen, handleClose, isCreate }) {
+import moment from "moment";
+export default function ClassDetailModal({ isOpen, handleClose, isCreate,handleReload,GetID }) {
   const [classList, setClassList] = React.useState([]);
   const schema = yup.object({
     CLASS_NAME: yup.string().required("Chưa Nhập Tên Lớp"),
@@ -32,27 +33,65 @@ export default function ClassDetailModal({ isOpen, handleClose, isCreate }) {
       CLASS_NAME: "",
       TIME_START_AT: "",
       TIME_END_AT: "",
+      NOTE:""
     },
 
     resolver: yupResolver(schema),
   });
   const callAPIGetClassList = async () => {
-    const response = await CommonApi.getClassList();
-    setValue("CLASS_NAME", response.Result[0].CLASS_NAME);
-    setValue("TIME_START_AT", response.Result[0].TIME_START_AT);
-    setValue("TIME_END_AT", response.Result[0].TIME_END_AT);
+    const response = await CommonApi.getClassListByID(GetID);
+    setValue("CLASS_NAME", response.Result[0]?.CLASS_NAME);
+    setValue("TIME_START_AT", response.Result[0]?.TIME_START_AT);
+    setValue("TIME_END_AT", response.Result[0]?.TIME_END_AT);
+    setValue("NOTE", response.Result[0]?.NOTE);
   };
   React.useEffect(() => {
-    if (!isCreate) callAPIGetClassList();
-  }, [isCreate]);
+    setValue("CLASS_NAME", "");
+    setValue("TIME_START_AT","");
+    setValue("TIME_END_AT", "");
+    setValue("NOTE", "");
+    if (!isCreate)
+    {
+      if(GetID!==undefined)
+      callAPIGetClassList();
+      
+    } 
+  }, [isOpen]);
   function checkIsValidField(fieldName) {
     if (isValid) return false;
     if (errors.hasOwnProperty(fieldName)) return true;
     return false;
   }
+  const handleInsertClass = async (item) => {
+      const response = await CommonApi.postInsertClass([item]);
+      if(response.StatusCode===200)
+      {
+        alert("Thêm Lớp Thành Công");
+        await handleReload()
+        handleClose();
+      }
+       
+  }
+  const handleUpdateClass = async (item) => {
+      const response = await CommonApi.postUpdateClass([item]);
+      if(response.StatusCode===200)
+      {
+        alert("Cập Nhật Lớp Thành Công");
+        await handleReload();
+        handleClose();
+      }
+       
+  }
   function onSubmit(data) {
-    //cap nhat api
-    console.log(data);
+    const newData = {...data};
+    if(GetID!==undefined)
+      newData.ID=GetID
+    newData.TIME_START_AT=moment(newData.TIME_START_AT).format("YYYY-MM-DD");
+    newData.TIME_END_AT=moment(newData.TIME_END_AT).format("YYYY-MM-DD");
+    if(isCreate)
+    handleInsertClass(newData);
+    else
+    handleUpdateClass(newData);
   }
   return (
     <div>
@@ -140,6 +179,22 @@ export default function ClassDetailModal({ isOpen, handleClose, isCreate }) {
                   />
                 )}
               ></Controller>
+               <Controller
+              name="NOTE"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <TextField
+                    id="NOTE"
+                    label="Ghi Chú"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    {...field}
+                  />
+                </>
+              )}
+            ></Controller>
             </LocalizationProvider>
           </DialogContent>
           <DialogActions>

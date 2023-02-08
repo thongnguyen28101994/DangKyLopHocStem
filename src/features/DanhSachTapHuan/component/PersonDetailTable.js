@@ -9,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -27,7 +26,6 @@ import { useParams } from "react-router-dom";
 import {
   AppBar,
   Autocomplete,
-  DialogContentText,
   TextField,
 } from "@mui/material";
 const headCells = [
@@ -345,11 +343,11 @@ export default function PersonDetailTable({
                 Tìm Kiếm
               </Button>
             </Box>
-            <Box>
+            {/* <Box>
               <Button variant="outlined" size="normal">
                 LƯU
               </Button>
-            </Box>
+            </Box> */}
           </Toolbar>
         </AppBar>
         <Box sx={{ width: "100%", marginTop: "5px" }}>

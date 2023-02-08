@@ -21,6 +21,10 @@ export const CommonApi = {
     const url = `/GetLopHoc`;
     return axiosClient.get(url);
   },
+  getClassListByID: (ID) => {
+    const url = `/GetLopHocByID/${ID}`;
+    return axiosClient.get(url);
+  },
   getAllNguoiDungByDonViID: (DonViID) => {
     const url = `/GetAllNguoiDungByDonViID/${DonViID}`;
     return axiosClient.get(url);
@@ -42,4 +46,32 @@ export const CommonApi = {
     const url = `/DeleteParticipant/${id}`;
     return axiosClient.get(url);
   },
+  getOfficialParticipantUnpaid: (DonViID, CLASS_ID)=>{
+    const url = `/GetOfficialParticipantUnpaid/${DonViID}/${CLASS_ID}`;
+    return axiosClient.get(url);
+  },
+  getOfficialParticipantPaid: (DonViID, CLASS_ID)=>{
+    const url = `/GetOfficialParticipantPaid/${DonViID}/${CLASS_ID}`;
+    return axiosClient.get(url);
+  },
+  getOfficialParticipantNotRegister : (DonViID, CLASS_ID) => {
+    const url = `/GetOfficialParticipantNotRegister/${DonViID}/${CLASS_ID}`;
+    return axiosClient.get(url);
+  },
+  postChangeStatusToPaid: (param) => {
+    const url = `/ChangeStatusToPaid`;
+    return axiosClient.post(url, param);
+  },
+  postChangeStatusToRegisted: (param) => {
+    const url = `/ChangeStatusToRegisted`;
+    return axiosClient.post(url, param);
+  },
+  postUpdateClass : (param) => {
+    const url = `/UpdateClass`;
+    return axiosClient.post(url, param);
+  },
+  postInsertClass : (param) => {
+    const url = `/InsertClass`;
+    return axiosClient.post(url, param);
+  }
 };
