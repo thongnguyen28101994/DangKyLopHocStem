@@ -41,6 +41,7 @@ export default function ClassesScreen() {
       </Box>
       <ClassDetailModal
         isOpen={isModalClassDetailOpen}
+        isCreate={true}
         handleClose={handleCloseModalClassDetail}
       />
     </>

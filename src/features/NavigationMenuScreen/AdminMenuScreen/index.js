@@ -20,6 +20,7 @@ import RegisterForm from "../../dangky";
 import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import ClassesScreen from "../../ClassesScreen";
 import Participant from "../../dangky/component/Participant";
+import ListParticipantUnpaid from "../../DanhSachTapHuan/component/ListParticipantUnpaid";
 const mdTheme = createTheme();
 
 export default function AdminMenuScreen() {
@@ -86,6 +87,9 @@ export default function AdminMenuScreen() {
                     </Route>
                     <Route path={`${root.path}/lophoc`}>
                       <ClassesScreen />
+                    </Route>
+                    <Route path={`${root.path}/chuathanhtoan`}>
+                      <ListParticipantUnpaid />
                     </Route>
                   </SwitchRouter>
                 </Paper>
