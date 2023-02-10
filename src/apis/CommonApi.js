@@ -73,5 +73,13 @@ export const CommonApi = {
   postInsertClass : (param) => {
     const url = `/InsertClass`;
     return axiosClient.post(url, param);
+  },
+  getOfficialParticipantIsPaidV2:() => {
+    const url='/GetOfficialParticipantIsPaidV2';
+    return axiosClient.get(url);
+  },
+  getOfficialParticipantNotRegisterV2 : ()=>{
+    const url ='/GetOfficialParticipantNotRegisterV2';
+    return axiosClient.get(url);
   }
 };

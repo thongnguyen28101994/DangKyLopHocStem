@@ -22,6 +22,8 @@ import ClassesScreen from "../../ClassesScreen";
 import Participant from "../../dangky/component/Participant";
 import ListParticipantPaid from "../../DanhSachTapHuan/component/ListParticipantPaid";
 import ListParticipantIsRegister from "../../DanhSachDaXepLop/component/ListParticipantIsRegister";
+import ParticipantIsPaid from "../../DanhSachTinhTrangThanhToan/component/ParticipantIsPaid";
+import ParticipantIsRegister from "../../DanhSachDaXepLopV2/component/ParticipantIsRegister";
 const mdTheme = createTheme();
 
 export default function AdminMenuScreen() {
@@ -72,7 +74,7 @@ export default function AdminMenuScreen() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth={false} sx={{ mt: 4, mb: 4 }}>
             <Grid container>
               <Grid item xs={12} md={12} lg={12}>
                 <Paper
@@ -87,10 +89,10 @@ export default function AdminMenuScreen() {
                       <ClassesScreen />
                     </Route>
                     <Route path={`${root.path}/thanhtoan`}>
-                      <ListParticipantPaid />
+                      <ParticipantIsPaid/>
                     </Route>
                     <Route path={`${root.path}/daxeplop`}>
-                      <ListParticipantIsRegister />
+                      <ParticipantIsRegister />
                     </Route>
                   </SwitchRouter>
                 </Paper>
