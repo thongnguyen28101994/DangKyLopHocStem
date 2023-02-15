@@ -64,7 +64,7 @@ const ParticipantIsRegister = () => {
         }
     }
     const CallAPIGetParticipantNotRegisted = async () =>{
-      const response = await CommonApi.getParticipantNotRegisterV2();
+      const response = await CommonApi.getParticipantIsRegisterV2();
       if(response.StatusCode===200)
       {
           const newData = response.Result.map((val,i)=>{
@@ -151,7 +151,7 @@ const ParticipantIsRegister = () => {
         <AppBar position="static" component="nav" color="transparent">
           <Toolbar sx={{ display: "flex" }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Danh Sách Xếp Lớp Chính Thức: {findParticipant.filter(e=>e.DA_XEP_LOP!==0).length} - Chưa Chính Thức: {participantNotRegisteds.length}
+              Danh Sách Xếp Lớp Chính Thức: {participantNotRegisteds.filter(e=>e.DA_XEP_LOP===true).length} - Chưa Chính Thức: {participantNotRegisteds.filter(e=>e.DA_XEP_LOP===false).length}
             </Typography>
             <ExportExcel excelData={exportData} fileName={"Export Data To Excel"}> </ExportExcel>
             <Button
