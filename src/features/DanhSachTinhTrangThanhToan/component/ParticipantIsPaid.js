@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { CommonApi } from '../../../apis/CommonApi';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,viVN } from '@mui/x-data-grid';
 import { Box } from '@mui/system';
-import { AppBar, Autocomplete, TextField, Toolbar,Button, Typography } from '@mui/material';
+import { AppBar, Autocomplete, TextField, Toolbar,Button, Typography, Chip } from '@mui/material';
 import moment from 'moment';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import SaveIcon from '@mui/icons-material/Save';
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 
 const  columns = [
@@ -12,13 +13,20 @@ const  columns = [
     {field:"ID",headerName:"ID",hide:true},
     { field: 'STT', headerName: 'STT', width: 50 },
     { field: 'MA', headerName: 'Mã Nhân Sự', width: 150 },
-    { field: 'HO_TEN', headerName: 'Họ Tên', width: 300 },
-    { field: 'TEN_TRUONG', headerName: 'Trường', width: 300 },
+    { field: 'HO_TEN', headerName: 'Họ Tên', width: 200,renderCell:(params)=>(
+         <strong>{params.value}</strong>
+    )},
+    { field: 'TEN_TRUONG', headerName: 'Trường', width: 200 },
     { field: 'QUAN_HUYEN', headerName: 'Quận Huyện', width: 200},
-    { field: 'EMAIL', headerName: 'EMAIL', width: 300 },
     
-    { field: 'TRANG_THAI_DONG_TIEN', headerName: 'Trạng Thái', width: 150},
-    { field: 'action', headerName: 'Thao Tác', width: 100},
+    { field: 'TRANG_THAI_DONG_TIEN', headerName: 'Trạng Thái', width: 150,  renderCell:(params)=>(
+
+      params.row.NGAY_DONG_TIEN!== null ? <Chip label={params.value} color="success" /> : <Chip label={params.value} color="warning" />
+     )},
+     
+    { field: 'NGAY_DONG_TIEN', headerName: 'Ngày Thanh Toán', width: 150,renderCell: (params)=>(
+      params.value!==null?<strong>{moment(params.value).format("DD/MM/YYYY")}</strong>:""
+    )},
     // {
     //   id: "SO_CMTND",
     //   numeric: false,
@@ -111,33 +119,34 @@ const ParticipantIsPaid = () => {
              <AppBar position="static" component="nav" color="transparent">
           <Toolbar sx={{ display: "flex" }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Danh Sách Xếp Lớp Chính Thức
+              Danh Sách Giáo Viên Thanh Toán: {participants.filter(e=>e.NGAY_DONG_TIEN!==null).length} - Chưa Thanh Toán: {participants.filter(e=>e.NGAY_DONG_TIEN===null).length}
             </Typography>
             <LocalizationProvider dateAdapter={AdapterMoment}>
               <DatePicker
               value={""}
+              
                     inputFormat="DD/MM/YYYY"
                     onChange={(e,value) => {
                         SetselectedDate(value)
                     }}
+                    disableOpenPicker={true}
                     renderInput={(props) => (
                       <>
                         <TextField
                           {...props}
                           size="small"
-                          
-                        
                         />
                       </>
                     )}
-                    label="Thời hạn thanh toán"
+                    label="Ngày thanh toán"
                   />
               </LocalizationProvider>
             <Button
               variant="outlined"
               size="normal"
-              sx={{ marginRight: "5px" }}
+              sx={{ marginLeft: "5px" }}
               onClick={CallAPIPostParticipantPaid}
+              startIcon={<SaveIcon/>}
             >
               Lưu
             </Button>
@@ -235,7 +244,7 @@ const ParticipantIsPaid = () => {
         <Box sx={{marginTop:"5px", height: "80vh", width: '100%' }}>
             <DataGrid rows={findParticipant} columns={columns} checkboxSelection={true} onSelectionModelChange={(newSelectionModel)=>{
                 setUserSelection(newSelectionModel);
-            }} />
+            }} localeText={viVN.components.MuiDataGrid.defaultProps.localeText} />
         </Box>
       
       
