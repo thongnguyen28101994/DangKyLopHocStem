@@ -61,6 +61,12 @@ const headCells = [
     disablePadding: false,
     label: "Điện Thoại",
   },
+  {
+    id: "CHUC_VU",
+    numeric: false,
+    disablePadding: false,
+    label: "Chức Vụ",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -334,6 +340,7 @@ export default function PersonDetailTable({
                           <TableCell align="right">{row.EMAIL}</TableCell>
                           {/* <TableCell align="right">{row.SO_CMTND}</TableCell> */}
                           <TableCell align="right">{row.DI_DONG}</TableCell>
+                          <TableCell align="right">{row.CHUC_VU}</TableCell>
                         </TableRow>
                       );
                     })}

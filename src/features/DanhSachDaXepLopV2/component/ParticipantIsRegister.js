@@ -12,9 +12,13 @@ const  columns = [
     {field:"ID",headerName:"ID",hide:true},
     { field: 'STT', headerName: 'STT', width: 50 },
     // { field: 'action', headerName: 'Thao Tác', width: 100},
-    { field: 'TRANG_THAI_DONG_TIEN', headerName: 'Trạng Thái', width: 150 , renderCell:(params)=>(
+    { field: 'TRANG_THAI_DONG_TIEN', headerName: 'Thanh Toán', width: 150 , renderCell:(params)=>(
 
-      params.row.DA_XEP_LOP ? <Chip label={params.value} color="success" /> : <Chip label={params.value} color="warning" />
+      params.row.NGAY_DONG_TIEN !==null ? <Chip label={params.value} color="success" /> : <Chip label={params.value} color="warning" />
+    )}, 
+    { field: 'TRANG_THAI_XEP_LOP', headerName: 'Xếp Lớp', width: 150 , renderCell:(params)=>(
+
+      params.row.DA_XEP_LOP ? <Chip label={params.value} color="success" /> : <Chip label={params.value} color="error" />
     )},
     { field: 'NGAY_XEP_LOP', headerName: 'Ngày xếp lớp', width: 150,renderCell: (params)=>(
       params.value!==null?<strong>{moment(params.value).format("DD/MM/YYYY")}</strong>:""
@@ -111,21 +115,46 @@ const ParticipantIsRegister = () => {
       const CallAPIPostParticipantRegister = async (param) => {
         if(userSelection.length>0)
         {
-          const request = userSelection.map((val)=>{
-            return {
-              ID:val,
-              DA_XEP_LOP:true
-            }
-          });
-           const response = await CommonApi.postChangeStatusToRegisted(request);
-        if ( response.StatusCode === 200) {
-          await CallAPIGetParticipant();
-          await CallAPIGetParticipantNotRegisted();
-          setUserSelection([]);
-        
-        } else {
-          alert(response?.Message);
+            const request = userSelection.map((val)=>{
+              return {
+                ID:val,
+                DA_XEP_LOP:true
+              }
+            });
+            const response = await CommonApi.postChangeStatusToRegisted(request);
+          if ( response.StatusCode === 200) {
+            setUserSelection([]);
+            await CallAPIGetParticipant();
+            await CallAPIGetParticipantNotRegisted();
+            
+          
+          } else {
+            alert(response?.Message);
+          }
         }
+        
+       
+      }
+
+      const CallAPIPostParticipantRemoveRegister = async (param) => {
+        if(userSelection.length>0)
+        {
+            const request = userSelection.map((val)=>{
+              return {
+                ID:val,
+                DA_XEP_LOP:false
+              }
+            });
+            const response = await CommonApi.postChangeStatusToRegisted(request);
+          if ( response.StatusCode === 200) {
+            setUserSelection([]);
+            await CallAPIGetParticipant();
+            await CallAPIGetParticipantNotRegisted();
+            
+          
+          } else {
+            alert(response?.Message);
+          }
         }
         
        
@@ -138,13 +167,14 @@ const ParticipantIsRegister = () => {
         callAPIGetClassList();
     },[])
     useEffect(()=>{
-      if(findParticipant.length>0)
+      if(participantNotRegisteds.length>0)
       {
-         let newData =[...findParticipant];
-         newData.forEach((v)=>{delete v.ID ; delete v.CLASS_ID; delete v.DonViID; delete v.MAT_KHAU; delete v.id          })
-          setExportData(newData);
+         let newData =[...participantNotRegisteds];
+         newData.forEach((v)=>{delete v.ID ; delete v.CLASS_ID; delete v.MAT_KHAU; delete v.id          });
+         const newSortedData =  newData.map((z)=>({STT:z["STT"],QUAN_HUYEN:z["QUAN_HUYEN"],TEN_TRUONG:z["TEN_TRUONG"],HO_TEN:z["HO_TEN"],CHUC_VU:z["CHUC_VU"],NGAY_DONG_TIEN:moment(z["NGAY_DONG_TIEN"]).isValid()?moment(z["NGAY_DONG_TIEN"]).format("DD/MM/YYYY hh:mm:ss"):"",NGAY_XEP_LOP:moment(z["NGAY_XEP_LOP"]).isValid()?moment(z["NGAY_XEP_LOP"]).format("DD/MM/YYYY hh:mm:ss"):"",MA:z["MA"],MA_TRUONG:z["DonViID"],TEN_DANG_NHAP:z["TEN_DANG_NHAP"],DI_DONG:z["DI_DONG"]}))
+          setExportData(newSortedData);
       }
-    },[findParticipant])
+    },[participantNotRegisteds])
     return (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
             
@@ -162,6 +192,15 @@ const ParticipantIsRegister = () => {
               startIcon={<SaveIcon/>}
             >
              Lưu Xếp Lớp
+            </Button>
+            <Button
+              variant="outlined"
+              size="normal"
+              sx={{ marginRight: "5px" }}
+              onClick={CallAPIPostParticipantRemoveRegister}
+              startIcon={<SaveIcon/>}
+            >
+             Hủy Xếp Lớp
             </Button>
             {/* <Button variant="outlined" size="normal">
               LƯU
@@ -255,9 +294,8 @@ const ParticipantIsRegister = () => {
           </Toolbar>
         </AppBar> */}
         <Box sx={{marginTop:"5px", height: "80vh", width: '100%' }}>
-            <DataGrid rows={findParticipant} columns={columns} checkboxSelection={true} onSelectionModelChange={(newSelectionModel)=>{
-                setUserSelection(newSelectionModel);
-            }}  localeText={viVN.components.MuiDataGrid.defaultProps.localeText} />
+            <DataGrid rows={findParticipant} columns={columns} checkboxSelection={true} onSelectionModelChange={setUserSelection}
+            selectionModel={userSelection}  localeText={viVN.components.MuiDataGrid.defaultProps.localeText} />
         </Box>
       
       

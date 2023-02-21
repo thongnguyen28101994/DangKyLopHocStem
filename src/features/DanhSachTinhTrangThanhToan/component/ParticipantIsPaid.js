@@ -266,9 +266,8 @@ const ParticipantIsPaid = () => {
           rows={findParticipant}
           columns={columns}
           checkboxSelection={true}
-          onSelectionModelChange={(newSelectionModel) => {
-            setUserSelection(newSelectionModel);
-          }}
+          onSelectionModelChange={setUserSelection}
+          selectionModel={userSelection}
           localeText={viVN.components.MuiDataGrid.defaultProps.localeText}
         />
       </Box>

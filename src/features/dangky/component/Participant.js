@@ -74,6 +74,12 @@ export default function Participant() {
       label: "Điện Thoại",
     },
     {
+      id: "CHUC_VU",
+      numeric: false,
+      disablePadding: false,
+      label: "Chức Vụ",
+    },
+    {
       id: "TRANG_THAI_DONG_TIEN",
       numeric: false,
       disablePadding: false,
