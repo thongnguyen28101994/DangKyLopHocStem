@@ -11,19 +11,19 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
 import ClassDetailModal from "./ClassDetailModal";
 import moment from "moment";
-export default function ClassList({Class,handleReload}) {
+export default function ClassList({ Class, handleReload }) {
   const [isModalClassDetailOpen, setModalClassOpen] = React.useState(false);
-  const [IDTest,setID]= React.useState(-1);
+  const [IDTest, setID] = React.useState(-1);
   const handleCloseModalClassDetail = () => {
     setModalClassOpen(false);
   };
   const handleOpenModalClassDetail = (id) => {
-    setID(id)
+    setID(id);
     setModalClassOpen(true);
   };
-  const editData= () => {
-    return false
-  }
+  const editData = () => {
+    return false;
+  };
   return (
     <>
       <TableContainer component={Paper}>
@@ -40,7 +40,6 @@ export default function ClassList({Class,handleReload}) {
           </TableHead>
           <TableBody>
             {Class.map((row) => (
-              
               <TableRow
                 key={row.CLASS_NAME}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -51,25 +50,27 @@ export default function ClassList({Class,handleReload}) {
                 <TableCell component="th" align="left">
                   {row.CLASS_NAME}
                 </TableCell>
-                <TableCell align="left">{moment(row.TIME_START_AT).format(
-              "DD/MM/YYYY")}</TableCell>
-               <TableCell align="left">{moment(row.TIME_END_AT).format(
-              "DD/MM/YYYY")}</TableCell>
-               <TableCell component="th" align="left">
+                <TableCell align="left">
+                  {moment(row.TIME_START_AT).format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell align="left">
+                  {moment(row.TIME_END_AT).format("DD/MM/YYYY")}
+                </TableCell>
+                <TableCell component="th" align="left">
                   {row.NOTE}
                 </TableCell>
-                <TableCell>
+                <TableCell sx={{ display: "flex", flexDirection: "row" }}>
                   <Button
                     variant="outlined"
                     size="medium"
                     color="warning"
-                    onClick={()=>handleOpenModalClassDetail(row.ID)}
+                    onClick={() => handleOpenModalClassDetail(row.ID)}
                   >
                     Cập Nhật
                   </Button>{" "}
-                  {/* <Button variant="outlined" size="medium" color="error">
-                  Xoá
-                </Button> */}
+                  <Button variant="outlined" size="medium" color="error">
+                    Khoá
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}
@@ -77,7 +78,7 @@ export default function ClassList({Class,handleReload}) {
         </Table>
       </TableContainer>
       <ClassDetailModal
-        GetID= {IDTest}
+        GetID={IDTest}
         isOpen={isModalClassDetailOpen}
         handleReload={handleReload}
         isCreate={false}
