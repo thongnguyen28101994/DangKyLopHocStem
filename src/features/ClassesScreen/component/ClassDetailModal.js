@@ -14,6 +14,7 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CommonApi } from "../../../apis/CommonApi";
 import moment from "moment";
+import { Switch } from "@mui/material";
 export default function ClassDetailModal({ isOpen, handleClose, isCreate,handleReload,GetID }) {
   const [classList, setClassList] = React.useState([]);
   const schema = yup.object({
@@ -44,12 +45,14 @@ export default function ClassDetailModal({ isOpen, handleClose, isCreate,handleR
     setValue("TIME_START_AT", response.Result[0]?.TIME_START_AT);
     setValue("TIME_END_AT", response.Result[0]?.TIME_END_AT);
     setValue("NOTE", response.Result[0]?.NOTE);
+    setValue("IS_OPEN", response.Result[0]?.IS_OPEN);
   };
   React.useEffect(() => {
     setValue("CLASS_NAME", "");
     setValue("TIME_START_AT","");
     setValue("TIME_END_AT", "");
     setValue("NOTE", "");
+    setValue("IS_OPEN",true)
     if (!isCreate)
     {
       if(GetID!==undefined)
@@ -190,6 +193,20 @@ export default function ClassDetailModal({ isOpen, handleClose, isCreate,handleR
                     variant="outlined"
                     fullWidth
                     margin="normal"
+                    {...field}
+                  />
+                </>
+              )}
+            ></Controller>
+             <Controller
+              name="IS_OPEN"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Switch 
+                    id="IS_OPEN"
+                   checked={field.value}
+                   
                     {...field}
                   />
                 </>

@@ -21,6 +21,10 @@ export const CommonApi = {
     const url = `/GetLopHoc`;
     return axiosClient.get(url);
   },
+  getClassListByAdmin: () => {
+    const url = `/GetLopHocAdmin`;
+    return axiosClient.get(url);
+  },
   getClassListByID: (ID) => {
     const url = `/GetLopHocByID/${ID}`;
     return axiosClient.get(url);

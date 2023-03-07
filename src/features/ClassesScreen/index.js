@@ -15,7 +15,7 @@ export default function ClassesScreen() {
   };
   const [classList, setClassList] = React.useState([]);
   const callAPIGetClassList = async () => {
-    const response = await CommonApi.getClassList();
+    const response = await CommonApi.getClassListByAdmin();
     setClassList(response.Result);
   };
   React.useEffect(() => {

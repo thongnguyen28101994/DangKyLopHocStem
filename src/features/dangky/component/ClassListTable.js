@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
 import moment from "moment";
+import RegisterElectronicBill from "./RegisterElectronicBill";
 export default function ClassListTable({ handleOpenModalClassDetail }) {
   const history = useHistory();
   const root = useRouteMatch();
@@ -18,6 +19,11 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
     const response = await CommonApi.getClassList();
     setClassList(response.Result);
   };
+  const [openModal,setOpenModal]= React.useState(false);
+  const [selectCLASSID,setSelectedCLASSID] = React.useState("");
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+  }
   React.useEffect(() => {
     callAPIGetClassList();
   }, []);
@@ -50,7 +56,7 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
                 <TableCell align="left">{formatStartDate}</TableCell>
                 <TableCell align="left">{formatEnDate}</TableCell>
                 <TableCell align="left">{val.NOTE}</TableCell>
-                <TableCell align="left">
+                <TableCell align="left" sx={{display:"flex", flexDirection:"row"}}>
                   <Button
                     variant="outlined"
                     size="medium"
@@ -62,12 +68,27 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
                   >
                     Chi Tiết
                   </Button>{" "}
+                  <Button
+                    variant="outlined"
+                    size="medium"
+                    color="warning"
+                    onClick={() => {
+                    //  const v = JSON.parse(localStorage.getItem("Data"));
+                    //  history.push(`/user/dangky/${val.ID}`);
+                      handleOpenModal();
+                      setSelectedCLASSID(val.ID);
+                    }}
+                  >
+                    Hóa Đơn
+                  </Button>{" "}
                 </TableCell>
               </TableRow>
             );
           })}
         </TableBody>
       </Table>
+      <RegisterElectronicBill isOpen={openModal} handleClose={handleOpenModal} CLASS_ID={selectCLASSID}/>
     </TableContainer>
+  
   );
 }

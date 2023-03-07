@@ -35,6 +35,7 @@ export default function ClassList({ Class, handleReload }) {
               <TableCell align="left">Thời Gian Kết Thúc Đăng Ký</TableCell>
               <TableCell align="left">Thời Gian Kết Thúc Đóng Tiền</TableCell>
               <TableCell align="left">Ghi Chú</TableCell>
+              <TableCell align="left">Trạng Thái</TableCell>
               <TableCell align="center">Thao Tác</TableCell>
             </TableRow>
           </TableHead>
@@ -59,7 +60,10 @@ export default function ClassList({ Class, handleReload }) {
                 <TableCell component="th" align="left">
                   {row.NOTE}
                 </TableCell>
-                <TableCell sx={{ display: "flex", flexDirection: "row" }}>
+                <TableCell component="th" align="left">
+                  {row.IS_OPEN?"Hoạt Động":"Khóa"}
+                </TableCell>
+                <TableCell>
                   <Button
                     variant="outlined"
                     size="medium"
@@ -68,9 +72,6 @@ export default function ClassList({ Class, handleReload }) {
                   >
                     Cập Nhật
                   </Button>{" "}
-                  <Button variant="outlined" size="medium" color="error">
-                    Khoá
-                  </Button>
                 </TableCell>
               </TableRow>
             ))}
