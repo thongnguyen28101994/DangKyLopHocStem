@@ -15,28 +15,39 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CommonApi } from "../../../apis/CommonApi";
 import moment from "moment";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-export default function RegisterElectronicBill({ isOpen, handleClose, isCreate,handleReload,CLASS_ID }) {
+export default function RegisterElectronicBill({
+  isOpen,
+  handleClose,
+  isCreate,
+  handleReload,
+  CLASS_ID,
+}) {
   const [classList, setClassList] = React.useState([]);
   const schema = yup.object({
     TaxCode: yup.string().required("Chưa Nhập MST"),
     Email: yup.string().required("Chưa Nhập Email"),
-    QuantityRegister:yup.number().required("Chưa Nhập Số Lượng").min(0).max(1000),
+    QuantityRegister: yup
+      .number()
+      .required("Chưa Nhập Số Lượng")
+      .min(0)
+      .max(1000),
   });
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
     setValue,
+    getValues,
   } = useForm({
     defaultValues: {
-        TaxCode: "",
-        Email:"",
-        QuantityRegister:0,
-      SchoolNote:"",
-      IsCreateBillFirst:"",
-      IsMergeBill:"",
-      Address:'',
-      Phone:""
+      TaxCode: "",
+      Email: "",
+      QuantityRegister: 0,
+      SchoolNote: "",
+      IsCreateBillFirst: "",
+      IsMergeBill: "",
+      Address: "",
+      Phone: "",
     },
 
     resolver: yupResolver(schema),
@@ -48,44 +59,41 @@ export default function RegisterElectronicBill({ isOpen, handleClose, isCreate,h
     setValue("TIME_END_AT", response.Result[0]?.TIME_END_AT);
     setValue("NOTE", response.Result[0]?.NOTE);
   };
-//   React.useEffect(() => {
-//     setValue("CLASS_NAME", "");
-//     setValue("TIME_START_AT","");
-//     setValue("TIME_END_AT", "");
-//     setValue("NOTE", "");
-//     if (!isCreate)
-//     {
-//       if(CLASS_ID!==undefined)
-//       callAPIGetClassList();
-      
-//     } 
-//   }, [isOpen]);
-const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(false);
+  //   React.useEffect(() => {
+  //     setValue("CLASS_NAME", "");
+  //     setValue("TIME_START_AT","");
+  //     setValue("TIME_END_AT", "");
+  //     setValue("NOTE", "");
+  //     if (!isCreate)
+  //     {
+  //       if(CLASS_ID!==undefined)
+  //       callAPIGetClassList();
+
+  //     }
+  //   }, [isOpen]);
+  const [isEnableQuantityRegister, setIsEnableQuantityRegister] =
+    React.useState(false);
   function checkIsValidField(fieldName) {
     if (isValid) return false;
     if (errors.hasOwnProperty(fieldName)) return true;
     return false;
   }
   const handleInsertClass = async (item) => {
-      const response = await CommonApi.postInsertClass([item]);
-      if(response.StatusCode===200)
-      {
-        alert("Thêm Lớp Thành Công");
-        await handleReload()
-        handleClose();
-      }
-       
-  }
+    const response = await CommonApi.postInsertClass([item]);
+    if (response.StatusCode === 200) {
+      alert("Thêm Lớp Thành Công");
+      await handleReload();
+      handleClose();
+    }
+  };
   const handleUpdateClass = async (item) => {
-      const response = await CommonApi.postUpdateClass([item]);
-      if(response.StatusCode===200)
-      {
-        alert("Cập Nhật Lớp Thành Công");
-        await handleReload();
-        handleClose();
-      }
-       
-  }
+    const response = await CommonApi.postUpdateClass([item]);
+    if (response.StatusCode === 200) {
+      alert("Cập Nhật Lớp Thành Công");
+      await handleReload();
+      handleClose();
+    }
+  };
   function onSubmit(data) {
     // const newData = {...data};
     // if(CLASS_ID!==undefined)
@@ -129,11 +137,11 @@ const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(fal
                 </>
               )}
             ></Controller>
-               <Controller
+            <Controller
               name="IsCreateBillFirst"
               control={control}
               render={({ field }) => (
-                <FormControl sx={{ marginTop: 2,width:"100%"}}>
+                <FormControl sx={{ marginTop: 2, width: "100%" }}>
                   <InputLabel id="IsCreateBillFirst">Hình Thức Chọn</InputLabel>
                   <Select
                     labelId="IsCreateBillFirst"
@@ -144,45 +152,55 @@ const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(fal
                     }}
                     {...field}
                   >
-                    <MenuItem value={"Xuất hóa đơn trước, đóng tiền sau"}>Xuất hóa đơn trước, đóng tiền sau</MenuItem>
-                    <MenuItem value={"Đóng tiền trước, xuất hóa đơn sau"}>Đóng tiền trước, xuất hóa đơn sau</MenuItem>
+                    <MenuItem value={"Xuất hóa đơn trước, đóng tiền sau"}>
+                      Xuất hóa đơn trước, đóng tiền sau
+                    </MenuItem>
+                    <MenuItem value={"Đóng tiền trước, xuất hóa đơn sau"}>
+                      Đóng tiền trước, xuất hóa đơn sau
+                    </MenuItem>
                   </Select>
                 </FormControl>
               )}
             />
-             <Controller
+            <Controller
               name="IsMergeBill"
               control={control}
               render={({ field }) => (
-                <FormControl sx={{ marginTop: 2,width:"100%"}}>
+                <FormControl sx={{ marginTop: 2, width: "100%" }}>
                   <InputLabel id="IsMergeBill">Yêu Cầu Xuất Hóa Đơn</InputLabel>
                   <Select
                     labelId="IsMergeBill"
                     id="IsMergeBill"
                     label="Yêu Cầu Xuất Hóa Đơn "
                     onChange={(e, v) => {
-                        console.log(v)
-                        if(v===1)
-                        { setIsEnableQuantityRegister(true); console.log('a')}  
-                        else
-                            setIsEnableQuantityRegister(false);
+                      alert('a')
+                      console.log(e);
+                      if (v === 1) {
+                        setIsEnableQuantityRegister(true);
+                        console.log("a");
+                      } else setIsEnableQuantityRegister(false);
                       field.onChange(v);
                     }}
                     {...field}
                   >
-                    <MenuItem value={1}>Xuất 1 hóa đơn chung cho cả trường</MenuItem>
-                    <MenuItem value={2}>Xuất hóa đơn riêng theo yêu cầu (ghi rõ yêu cầu vào mục ghi chú bên dưới)</MenuItem>
+                    <MenuItem value={1}>
+                      Xuất 1 hóa đơn chung cho cả trường
+                    </MenuItem>
+                    <MenuItem value={2}>
+                      Xuất hóa đơn riêng theo yêu cầu (ghi rõ yêu cầu vào mục
+                      ghi chú bên dưới)
+                    </MenuItem>
                   </Select>
                 </FormControl>
               )}
             />
-              <Controller
+            <Controller
               name="QuantityRegister"
               control={control}
               render={({ field }) => (
                 <>
                   <TextField
-                   disabled={isEnableQuantityRegister}
+                    disabled={isEnableQuantityRegister}
                     type="number"
                     id="QuantityRegister"
                     label="Số Lượng Đăng Ký"
@@ -214,8 +232,8 @@ const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(fal
                 </>
               )}
             ></Controller>
-             
-             <Controller
+
+            <Controller
               name="Phone"
               control={control}
               render={({ field }) => (
@@ -233,7 +251,7 @@ const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(fal
                 </>
               )}
             ></Controller>
-              <Controller
+            <Controller
               name="Address"
               control={control}
               render={({ field }) => (
@@ -251,16 +269,16 @@ const [isEnableQuantityRegister,setIsEnableQuantityRegister]= React.useState(fal
                 </>
               )}
             ></Controller>
-           
-              <Controller
+
+            <Controller
               name="SchoolNote"
               control={control}
               render={({ field }) => (
                 <>
                   <TextField
-                //   multiline
-                //   rows={4}
-                //   maxRows={6}
+                    // multiline
+                    // rows={4}
+                    // maxRows={6}
                     id="SchoolNote"
                     label="Ghi Chú"
                     variant="outlined"
