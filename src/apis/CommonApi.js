@@ -50,15 +50,15 @@ export const CommonApi = {
     const url = `/DeleteParticipant/${id}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipantUnpaid: (DonViID, CLASS_ID)=>{
+  getOfficialParticipantUnpaid: (DonViID, CLASS_ID) => {
     const url = `/GetOfficialParticipantUnpaid/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipantPaid: (DonViID, CLASS_ID)=>{
+  getOfficialParticipantPaid: (DonViID, CLASS_ID) => {
     const url = `/GetOfficialParticipantPaid/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipantNotRegister : (DonViID, CLASS_ID) => {
+  getOfficialParticipantNotRegister: (DonViID, CLASS_ID) => {
     const url = `/GetOfficialParticipantNotRegister/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
@@ -70,24 +70,36 @@ export const CommonApi = {
     const url = `/ChangeStatusToRegisted`;
     return axiosClient.post(url, param);
   },
-  postUpdateClass : (param) => {
+  postUpdateClass: (param) => {
     const url = `/UpdateClass`;
     return axiosClient.post(url, param);
   },
-  postInsertClass : (param) => {
+  postInsertClass: (param) => {
     const url = `/InsertClass`;
     return axiosClient.post(url, param);
   },
-  getOfficialParticipantIsPaidV2:() => {
-    const url='/GetOfficialParticipantIsPaidV2';
+  getOfficialParticipantIsPaidV2: () => {
+    const url = "/GetOfficialParticipantIsPaidV2";
     return axiosClient.get(url);
   },
-  getOfficialParticipantNotRegisterV2 : ()=>{
-    const url ='/GetOfficialParticipantNotRegisterV2';
+  getOfficialParticipantNotRegisterV2: () => {
+    const url = "/GetOfficialParticipantNotRegisterV2";
     return axiosClient.get(url);
   },
-  getParticipantIsRegisterV2: () =>{
-    const url ='/GetParticipantIsRegisterV2';
+  getParticipantIsRegisterV2: () => {
+    const url = "/GetParticipantIsRegisterV2";
     return axiosClient.get(url);
-  }
+  },
+  getBillList: () => {
+    const url = `/GetBillList`;
+    return axiosClient.get(url);
+  },
+  getBillByID: (CLASS_ID, DonViID) => {
+    const url = `/GetInfomationElectronicBill/${CLASS_ID}/${DonViID}`;
+    return axiosClient.get(url);
+  },
+  postSaveBill: (params) => {
+    const url = `/SaveChangeElectronicBill`;
+    return axiosClient.post(url, params);
+  },
 };

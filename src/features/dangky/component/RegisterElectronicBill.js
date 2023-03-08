@@ -23,6 +23,7 @@ export default function RegisterElectronicBill({
   CLASS_ID,
 }) {
   const [classList, setClassList] = React.useState([]);
+  const a = JSON.parse(localStorage.getItem("Data"));
   const schema = yup.object({
     TaxCode: yup.string().required("Chưa Nhập MST"),
     Email: yup.string().required("Chưa Nhập Email"),
@@ -31,46 +32,60 @@ export default function RegisterElectronicBill({
       .required("Chưa Nhập Số Lượng")
       .min(0)
       .max(1000),
+    Phone: yup.string().required("Chưa Nhập Số Điện Thoại"),
+    IsCreateBillFirst: yup.string().required("Chưa Chọn Hình Thức Chọn"),
+    IsMergeBill: yup.string().required("Chưa Chọn Hình Thức"),
+    Address: yup.string().required("Chưa Nhập Địa Chỉ"),
   });
+
   const {
     control,
     handleSubmit,
     formState: { errors, isValid },
     setValue,
-    getValues,
   } = useForm({
     defaultValues: {
+      ID: "",
       TaxCode: "",
       Email: "",
-      QuantityRegister: 0,
+      QuantityRegister: 1,
       SchoolNote: "",
       IsCreateBillFirst: "",
       IsMergeBill: "",
       Address: "",
       Phone: "",
+      SchoolNote: "",
     },
 
     resolver: yupResolver(schema),
   });
-  const callAPIGetClassList = async () => {
-    const response = await CommonApi.getClassListByID(CLASS_ID);
-    setValue("CLASS_NAME", response.Result[0]?.CLASS_NAME);
-    setValue("TIME_START_AT", response.Result[0]?.TIME_START_AT);
-    setValue("TIME_END_AT", response.Result[0]?.TIME_END_AT);
-    setValue("NOTE", response.Result[0]?.NOTE);
+  const callApiGetBillByID = async () => {
+    const response = await CommonApi.getBillByID(CLASS_ID, a.MA_TRUONG);
+    if (response.Result.length > 0) {
+      setValue("ID", response.Result[0].ID);
+      setValue("TaxCode", response.Result[0].TaxCode);
+      setValue("Email", response.Result[0].Email);
+      setValue("Phone", response.Result[0].Phone);
+      setValue("QuantityRegister", response.Result[0].QuantityRegister);
+      setValue("SchoolNote", response.Result[0].SchoolNote);
+      setValue("IsCreateBillFirst", response.Result[0].IsCreateBillFirst);
+      setValue("IsMergeBill", response.Result[0].IsMergeBill);
+      setValue("Address", response.Result[0].Address);
+    } else {
+      setValue("ID", 0);
+      setValue("Email", "");
+      setValue("Phone", "");
+      setValue("QuantityRegister", 1);
+      setValue("SchoolNote", "");
+      setValue("IsCreateBillFirst", "");
+      setValue("IsMergeBill", "");
+      setValue("Address", "");
+      setValue("SchoolNote", " ");
+    }
   };
-  //   React.useEffect(() => {
-  //     setValue("CLASS_NAME", "");
-  //     setValue("TIME_START_AT","");
-  //     setValue("TIME_END_AT", "");
-  //     setValue("NOTE", "");
-  //     if (!isCreate)
-  //     {
-  //       if(CLASS_ID!==undefined)
-  //       callAPIGetClassList();
-
-  //     }
-  //   }, [isOpen]);
+  React.useEffect(() => {
+    if (isOpen) callApiGetBillByID();
+  }, [isOpen]);
   const [isEnableQuantityRegister, setIsEnableQuantityRegister] =
     React.useState(false);
   function checkIsValidField(fieldName) {
@@ -78,23 +93,16 @@ export default function RegisterElectronicBill({
     if (errors.hasOwnProperty(fieldName)) return true;
     return false;
   }
-  const handleInsertClass = async (item) => {
-    const response = await CommonApi.postInsertClass([item]);
-    if (response.StatusCode === 200) {
-      alert("Thêm Lớp Thành Công");
-      await handleReload();
-      handleClose();
-    }
-  };
-  const handleUpdateClass = async (item) => {
-    const response = await CommonApi.postUpdateClass([item]);
-    if (response.StatusCode === 200) {
-      alert("Cập Nhật Lớp Thành Công");
-      await handleReload();
-      handleClose();
-    }
-  };
   function onSubmit(data) {
+    console.log(data);
+    const newData = { ...data };
+    newData.CLASS_ID = CLASS_ID;
+    newData.DonViID = a.MA_TRUONG;
+    const response = CommonApi.postSaveBill([newData]);
+    console.log(response);
+    if (response.StatusCode === 200) {
+      alert("Lưu Thành Công");
+    }
     // const newData = {...data};
     // if(CLASS_ID!==undefined)
     //   newData.ID=CLASS_ID
@@ -118,7 +126,6 @@ export default function RegisterElectronicBill({
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
           </DialogContentText> */}
-
             <Controller
               name="TaxCode"
               control={control}
@@ -147,10 +154,10 @@ export default function RegisterElectronicBill({
                     labelId="IsCreateBillFirst"
                     id="IsCreateBillFirst"
                     label="Hình Thức Chọn"
-                    onChange={(e, v) => {
-                      field.onChange(v);
-                    }}
                     {...field}
+                    onChange={(e, v) => {
+                      field.onChange(e.target.value);
+                    }}
                   >
                     <MenuItem value={"Xuất hóa đơn trước, đóng tiền sau"}>
                       Xuất hóa đơn trước, đóng tiền sau
@@ -167,26 +174,34 @@ export default function RegisterElectronicBill({
               control={control}
               render={({ field }) => (
                 <FormControl sx={{ marginTop: 2, width: "100%" }}>
-                  <InputLabel id="IsMergeBill">Yêu Cầu Xuất Hóa Đơn</InputLabel>
+                  <InputLabel id="IsMergeBillLabel">
+                    Yêu Cầu Xuất Hóa Đơn
+                  </InputLabel>
                   <Select
-                    labelId="IsMergeBill"
+                    labelId="IsMergeBillLabel"
                     id="IsMergeBill"
                     label="Yêu Cầu Xuất Hóa Đơn "
-                    onChange={(e, v) => {
-                      alert('a')
-                      console.log(e);
-                      if (v === 1) {
-                        setIsEnableQuantityRegister(true);
-                        console.log("a");
-                      } else setIsEnableQuantityRegister(false);
-                      field.onChange(v);
-                    }}
                     {...field}
+                    onChange={(e, v) => {
+                      if (
+                        e.target.value === "Xuất 1 hóa đơn chung cho cả trường"
+                      ) {
+                        setIsEnableQuantityRegister(false);
+                      } else {
+                        setIsEnableQuantityRegister(true);
+                      }
+
+                      field.onChange(e.target.value);
+                    }}
                   >
-                    <MenuItem value={1}>
+                    <MenuItem value={"Xuất 1 hóa đơn chung cho cả trường"}>
                       Xuất 1 hóa đơn chung cho cả trường
                     </MenuItem>
-                    <MenuItem value={2}>
+                    <MenuItem
+                      value={
+                        "Xuất hóa đơn riêng theo yêu cầu (ghi rõ yêu cầu vào mục ghi chú bên dưới)"
+                      }
+                    >
                       Xuất hóa đơn riêng theo yêu cầu (ghi rõ yêu cầu vào mục
                       ghi chú bên dưới)
                     </MenuItem>
@@ -194,26 +209,30 @@ export default function RegisterElectronicBill({
                 </FormControl>
               )}
             />
-            <Controller
-              name="QuantityRegister"
-              control={control}
-              render={({ field }) => (
-                <>
-                  <TextField
-                    disabled={isEnableQuantityRegister}
-                    type="number"
-                    id="QuantityRegister"
-                    label="Số Lượng Đăng Ký"
-                    variant="outlined"
-                    fullWidth
-                    margin="normal"
-                    error={checkIsValidField("QuantityRegister")}
-                    helperText={errors.QuantityRegister?.message}
-                    {...field}
-                  />
-                </>
-              )}
-            ></Controller>
+
+            {isEnableQuantityRegister ? (
+              <Controller
+                name="QuantityRegister"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      type="number"
+                      id="QuantityRegister"
+                      label="Số Lượng Đăng Ký"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      error={checkIsValidField("QuantityRegister")}
+                      helperText={errors.QuantityRegister?.message}
+                      {...field}
+                    />
+                  </>
+                )}
+              ></Controller>
+            ) : (
+              ""
+            )}
             <Controller
               name="Email"
               control={control}
