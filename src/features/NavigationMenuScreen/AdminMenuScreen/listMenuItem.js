@@ -28,6 +28,11 @@ export const MainListItems = () => {
         primary={"Danh Sách Xếp Lớp"}
         icon={<DashboardIcon />}
       ></ListItemLink>
+       <ListItemLink
+        to={`${root.url}/danhsachthongtinhoadon`}
+        primary={"DS Thông Tin Hóa Đơn"}
+        icon={<DashboardIcon />}
+      ></ListItemLink>
       {/* <ListItemButton>
       <ListItemIcon>
         <DashboardIcon />

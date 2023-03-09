@@ -36,7 +36,7 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
             <TableCell align="left">Hạn Kết Thúc Đăng Ký</TableCell>
             <TableCell align="left">Hạn Đóng Học Phí</TableCell>
             <TableCell align="left">Ghi Chú</TableCell>
-            <TableCell align="center">Thao Tác</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,24 +62,22 @@ export default function ClassListTable({ handleOpenModalClassDetail }) {
                     size="medium"
                     color="warning"
                     onClick={() => {
-                      const v = JSON.parse(localStorage.getItem("Data"));
                       history.push(`/user/dangky/${val.ID}`);
                     }}
                   >
-                    Chi Tiết
+                    Đăng Ký Học Viên
                   </Button>{" "}
                   <Button
                     variant="outlined"
                     size="medium"
-                    color="warning"
+                    color="secondary"
+                    sx={{marginLeft:1}}
                     onClick={() => {
-                    //  const v = JSON.parse(localStorage.getItem("Data"));
-                    //  history.push(`/user/dangky/${val.ID}`);
                       handleOpenModal();
                       setSelectedCLASSID(val.ID);
                     }}
                   >
-                    Hóa Đơn
+                    Đăng Ký Hóa Đơn
                   </Button>{" "}
                 </TableCell>
               </TableRow>

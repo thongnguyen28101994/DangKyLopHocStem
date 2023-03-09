@@ -130,6 +130,28 @@ const ParticipantIsPaid = () => {
       }
     }
   };
+  const CallAPIPostParticipantRemovePaid = async (param) => {
+    if(userSelection.length>0)
+    {
+        const request = userSelection.map((val)=>{
+          return {
+            ID:val,
+            NGAY_DONG_TIEN: null
+          }
+        });
+        const response = await CommonApi.postChangeStatusToUnPaid(request);
+      if ( response.StatusCode === 200) {
+        setUserSelection([]);
+        await CallAPIGetParticipant();
+       
+      
+      } else {
+        alert(response?.Message);
+      }
+    }
+    
+   
+  }
   useEffect(() => {
     CallAPIGetParticipant();
     callAPIGetDMQuanHuyen();
@@ -145,6 +167,15 @@ const ParticipantIsPaid = () => {
             Chưa Thanh Toán:{" "}
             {participants.filter((e) => e.NGAY_DONG_TIEN === null).length}
           </Typography>
+          <Button
+            variant="outlined"
+            size="normal"
+            sx={{ marginRight: "15px" }}
+            onClick={CallAPIPostParticipantRemovePaid}
+            startIcon={<SaveIcon />}
+          >
+            Hủy Thanh Toán
+          </Button>
           <LocalizationProvider dateAdapter={AdapterMoment}>
             <DatePicker
               value={""}

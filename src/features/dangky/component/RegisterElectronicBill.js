@@ -26,7 +26,7 @@ export default function RegisterElectronicBill({
   const a = JSON.parse(localStorage.getItem("Data"));
   const schema = yup.object({
     TaxCode: yup.string().required("Chưa Nhập MST"),
-    Email: yup.string().required("Chưa Nhập Email"),
+    Email: yup.string().required("Chưa Nhập Email").email("Không phải Định dạng Email"),
     QuantityRegister: yup
       .number()
       .required("Chưa Nhập Số Lượng")
@@ -54,7 +54,7 @@ export default function RegisterElectronicBill({
       IsMergeBill: "",
       Address: "",
       Phone: "",
-      SchoolNote: "",
+      Name: "",
     },
 
     resolver: yupResolver(schema),
@@ -71,16 +71,18 @@ export default function RegisterElectronicBill({
       setValue("IsCreateBillFirst", response.Result[0].IsCreateBillFirst);
       setValue("IsMergeBill", response.Result[0].IsMergeBill);
       setValue("Address", response.Result[0].Address);
+      setValue("Name", response.Result[0].Name);
     } else {
       setValue("ID", 0);
       setValue("Email", "");
       setValue("Phone", "");
-      setValue("QuantityRegister", 1);
+      setValue("QuantityRegister", 0);
       setValue("SchoolNote", "");
       setValue("IsCreateBillFirst", "");
       setValue("IsMergeBill", "");
       setValue("Address", "");
       setValue("SchoolNote", " ");
+      setValue("Name", " ");
     }
   };
   React.useEffect(() => {
@@ -93,25 +95,15 @@ export default function RegisterElectronicBill({
     if (errors.hasOwnProperty(fieldName)) return true;
     return false;
   }
-  function onSubmit(data) {
-    console.log(data);
+async  function  onSubmit(data) {
     const newData = { ...data };
     newData.CLASS_ID = CLASS_ID;
     newData.DonViID = a.MA_TRUONG;
-    const response = CommonApi.postSaveBill([newData]);
+    const response = await CommonApi.postSaveBill([newData]);
     console.log(response);
     if (response.StatusCode === 200) {
       alert("Lưu Thành Công");
     }
-    // const newData = {...data};
-    // if(CLASS_ID!==undefined)
-    //   newData.ID=CLASS_ID
-    // newData.TIME_START_AT=moment(newData.TIME_START_AT).format("YYYY-MM-DD");
-    // newData.TIME_END_AT=moment(newData.TIME_END_AT).format("YYYY-MM-DD");
-    // if(isCreate)
-    // handleInsertClass(newData);
-    // else
-    // handleUpdateClass(newData);
   }
   return (
     <div>
@@ -120,7 +112,7 @@ export default function RegisterElectronicBill({
           onSubmit={handleSubmit(onSubmit)}
           style={{ width: "100%", padding: "0 2rem" }}
         >
-          <DialogTitle>Tạo/Cập Nhật Hóa Đơn</DialogTitle>
+          <DialogTitle>Nhập Thông Tin Xuất Hóa Đơn Điện Tử</DialogTitle>
           <DialogContent>
             {/* <DialogContentText>
             To subscribe to this website, please enter your email address here.
@@ -139,6 +131,24 @@ export default function RegisterElectronicBill({
                     margin="normal"
                     error={checkIsValidField("TaxCode")}
                     helperText={errors.TaxCode?.message}
+                    {...field}
+                  />
+                </>
+              )}
+            ></Controller>
+               <Controller
+              name="Name"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <TextField
+                    id="Name"
+                    label="Tên Đơn Vị (Tên Đăng Ký Với Thuế)"
+                    variant="outlined"
+                    fullWidth
+                    margin="normal"
+                    error={checkIsValidField("Name")}
+                    helperText={errors.Name?.message}
                     {...field}
                   />
                 </>
@@ -186,6 +196,7 @@ export default function RegisterElectronicBill({
                       if (
                         e.target.value === "Xuất 1 hóa đơn chung cho cả trường"
                       ) {
+                        setValue("QuantityRegister",0)
                         setIsEnableQuantityRegister(false);
                       } else {
                         setIsEnableQuantityRegister(true);
@@ -240,7 +251,7 @@ export default function RegisterElectronicBill({
                 <>
                   <TextField
                     id="Email"
-                    label="Email"
+                    label="Email nhận hóa đơn điện tử"
                     variant="outlined"
                     fullWidth
                     margin="normal"
@@ -295,8 +306,8 @@ export default function RegisterElectronicBill({
               render={({ field }) => (
                 <>
                   <TextField
-                    // multiline
-                    // rows={4}
+                     multiline
+                     rows={2}
                     // maxRows={6}
                     id="SchoolNote"
                     label="Ghi Chú"

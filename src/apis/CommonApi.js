@@ -70,6 +70,10 @@ export const CommonApi = {
     const url = `/ChangeStatusToRegisted`;
     return axiosClient.post(url, param);
   },
+  postChangeStatusToUnPaid: (param) => {
+    const url = `/ChangeStatusToUnPaid`;
+    return axiosClient.post(url, param);
+  },
   postUpdateClass: (param) => {
     const url = `/UpdateClass`;
     return axiosClient.post(url, param);
@@ -90,8 +94,8 @@ export const CommonApi = {
     const url = "/GetParticipantIsRegisterV2";
     return axiosClient.get(url);
   },
-  getBillList: () => {
-    const url = `/GetBillList`;
+  getBillList: (id="") => {
+    const url = `/GetBillList/${id}`;
     return axiosClient.get(url);
   },
   getBillByID: (CLASS_ID, DonViID) => {

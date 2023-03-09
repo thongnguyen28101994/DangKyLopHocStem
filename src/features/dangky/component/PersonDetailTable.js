@@ -188,7 +188,7 @@ export default function PersonDetailTable({
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(100);
   const [rows, setRows] = React.useState([]);
 
   const handleRequestSort = (event, property) => {
@@ -357,7 +357,7 @@ export default function PersonDetailTable({
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[50,100]}
               component="div"
               count={rows.length}
               rowsPerPage={rowsPerPage}

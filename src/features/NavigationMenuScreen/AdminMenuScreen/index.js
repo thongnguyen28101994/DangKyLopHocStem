@@ -24,6 +24,7 @@ import ListParticipantPaid from "../../DanhSachTapHuan/component/ListParticipant
 import ListParticipantIsRegister from "../../DanhSachDaXepLop/component/ListParticipantIsRegister";
 import ParticipantIsPaid from "../../DanhSachTinhTrangThanhToan/component/ParticipantIsPaid";
 import ParticipantIsRegister from "../../DanhSachDaXepLopV2/component/ParticipantIsRegister";
+import BillList from "../../DanhSachThongTinHoaDon/component/BillList";
 const mdTheme = createTheme();
 
 export default function AdminMenuScreen() {
@@ -93,6 +94,9 @@ export default function AdminMenuScreen() {
                     </Route>
                     <Route path={`${root.path}/daxeplop`}>
                       <ParticipantIsRegister />
+                    </Route>
+                    <Route path={`${root.path}/danhsachthongtinhoadon`}>
+                      <BillList/>
                     </Route>
                   </SwitchRouter>
                 </Paper>
