@@ -19,7 +19,7 @@ const columns = [
   { field: "id", hide: true },
   { field: "ID", headerName: "ID", hide: true },
   { field: "STT", headerName: "STT", width: 50 },
-  // { field: 'action', headerName: 'Thao Tác', width: 100},
+  { field: "EInvoice", headerName: "Số Hoá Đơn", width: 100 },
   {
     field: "TRANG_THAI_DONG_TIEN",
     headerName: "Thanh Toán",
@@ -85,6 +85,7 @@ const ParticipantIsRegister = () => {
   const [findParticipant, setFindParticipant] = useState([]);
   const [userSelection, setUserSelection] = useState([]);
   const [selectedItem, setSelectedItem] = useState({});
+  const [einvoice, setEInvoice] = useState("");
   // const [districtList, setDistrict] = React.useState([]);
   // const [schoolList, setSchoolList] = React.useState([]);
   // const [SchoolID, setSchoolID] = React.useState({FINDNAME:""});
@@ -119,12 +120,12 @@ const ParticipantIsRegister = () => {
 
   const callAPIGetClassList = async () => {
     const response = await CommonApi.getClassListByAdmin();
-    const newData = response.Result.map((val,i)=>{
+    const newData = response.Result.map((val, i) => {
       return {
         ...val,
-        id:val.ID
-      }
-    })
+        id: val.ID,
+      };
+    });
     setClassList(newData);
   };
   // const callAPIGetDMQuanHuyen = async () => {
@@ -160,13 +161,30 @@ const ParticipantIsRegister = () => {
         };
       });
       const response = await CommonApi.postChangeStatusToRegisted(request);
+      setUserSelection([]);
       if (response.StatusCode === 200) {
-        setUserSelection([]);
         await CallAPIGetParticipant();
         await CallAPIGetParticipantNotRegisted();
       } else {
         alert(response?.Message);
       }
+    }
+  };
+  const CallAPIUpdateEInvoiceForRegister = async (param) => {
+    if (userSelection.length == 0) alert("Chưa Chọn Giáo Viên");
+    const request = userSelection.map((val) => {
+      return {
+        ID: val,
+        EInvoice: einvoice,
+      };
+    });
+    const response = await CommonApi.postUpdateEInvoice(request);
+    if (response.StatusCode === 200) {
+      setUserSelection([]);
+      setEInvoice("");
+      await CallAPIGetParticipant(classList.at(-1).ID);
+    } else {
+      alert(response?.Message);
     }
   };
 
@@ -216,7 +234,11 @@ const ParticipantIsRegister = () => {
       <AppBar position="static" component="nav" color="transparent">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1,marginRight:1 }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, marginRight: 1 }}
+            >
               Xếp Lớp Chính Thức:{" "}
               {
                 participantNotRegisteds.filter((e) => e.DA_XEP_LOP === true)
@@ -228,14 +250,15 @@ const ParticipantIsRegister = () => {
                   .length
               }
             </Typography>
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Autocomplete
-         
-            //  value={selectedItem?selectedItem:""}
+              //  value={selectedItem?selectedItem:""}
               disableClearable
               size="small"
               id="combobox1"
               options={classList}
-             // isOptionEqualToValue={(option, value) => option.id === value.id}
+              // isOptionEqualToValue={(option, value) => option.id === value.id}
               getOptionLabel={(item) => item.CLASS_NAME}
               onChange={(e, value) => {
                 CallAPIGetParticipant(value.ID);
@@ -246,6 +269,33 @@ const ParticipantIsRegister = () => {
               )}
               sx={{ width: 300 }}
             />
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        position="static"
+        component="nav"
+        color="transparent"
+        sx={{ marginTop: 1 }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box>
+            <TextField
+              value={einvoice}
+              onChange={(e) => setEInvoice(e.target.value)}
+              label={"Số Hoá Đơn"}
+              size={"small"}
+              sx={{ marginRight: 1 }}
+            ></TextField>
+            <Button
+              variant="outlined"
+              size="normal"
+              sx={{ marginRight: "5px" }}
+              onClick={CallAPIUpdateEInvoiceForRegister}
+              startIcon={<SaveIcon />}
+            >
+              Lưu Hoá Đơn
+            </Button>
           </Box>
           <Box>
             {" "}
@@ -276,92 +326,6 @@ const ParticipantIsRegister = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      {/* <AppBar position="static" component="nav" color="transparent">
-          <Toolbar
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-              }}
-            >
-               <Autocomplete
-                disableClearable
-                size="small"
-                id="combobox"
-                options={classList}
-                getOptionLabel={(d) => d.CLASS_NAME}
-                getOptionSelected={(option, value) =>
-                  option.MA === value.MA
-                }
-                onChange={(e, value) => {
-                  setSchoolID({...SchoolID,CLASS_ID:value.ID});
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Lớp Học" />
-                )}
-                sx={{ width: 300 }}
-              />
-              <Autocomplete
-                disableClearable
-                size="small"
-                id="combobox1"
-                options={districtList}
-                getOptionLabel={(district) => district.TEN}
-                getOptionSelected={(option, value) =>
-                  option.MA === value.MA
-                }
-                onChange={(e, value) => {
-                  callAPIGetDMTruong(value.MA);
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Quận Huyện" />
-                )}
-                sx={{ width: 300 }}
-              />
-              <Autocomplete
-                disableClearable
-                size="small"
-                id="combobox2"
-                options={schoolList}
-                getOptionLabel={(district) => district.TEN}
-                getOptionSelected={(option, value) =>
-                  option.MA === value.MA
-                }
-                onChange={(e, value) => {
-                  setSchoolID({...SchoolID,SchoolID:value.MA});
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Trường" />
-                )}
-                sx={{ width: 300 }}
-              />
-              <TextField
-                    id="FINDNAME"
-                    label="Tên hoặc mã gv"
-                    variant="outlined"
-                    size="small"
-                    defaultValue={""}
-                    onChange={(e) => {
-                        setSchoolID({...SchoolID,FINDNAME:e.target.value});
-                      }}
-                    />
-              <Button
-                variant="outlined"
-                size="normal"
-                sx={{ marginRight: "5px" }}
-                onClick={handleFindSchoolID}
-              >
-                Tìm Kiếm
-              </Button>
-              
-            </Box>
-           
-          </Toolbar>
-        </AppBar> */}
       <Box sx={{ marginTop: "5px", height: "80vh", width: "100%" }}>
         <DataGrid
           rows={findParticipant}

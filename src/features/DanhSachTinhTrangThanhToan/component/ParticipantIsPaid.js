@@ -122,36 +122,31 @@ const ParticipantIsPaid = () => {
         };
       });
       const response = await CommonApi.postChangeStatusToPaid(request);
+      setUserSelection([]);
       if (response.StatusCode === 200) {
         await CallAPIGetParticipant();
-        setUserSelection([]);
       } else {
         alert(response?.Message);
       }
     }
   };
   const CallAPIPostParticipantRemovePaid = async (param) => {
-    if(userSelection.length>0)
-    {
-        const request = userSelection.map((val)=>{
-          return {
-            ID:val,
-            NGAY_DONG_TIEN: null
-          }
-        });
-        const response = await CommonApi.postChangeStatusToUnPaid(request);
-      if ( response.StatusCode === 200) {
+    if (userSelection.length > 0) {
+      const request = userSelection.map((val) => {
+        return {
+          ID: val,
+          NGAY_DONG_TIEN: null,
+        };
+      });
+      const response = await CommonApi.postChangeStatusToUnPaid(request);
+      if (response.StatusCode === 200) {
         setUserSelection([]);
         await CallAPIGetParticipant();
-       
-      
       } else {
         alert(response?.Message);
       }
     }
-    
-   
-  }
+  };
   useEffect(() => {
     CallAPIGetParticipant();
     callAPIGetDMQuanHuyen();
