@@ -30,6 +30,12 @@ const columns = [
     renderCell: (params) => <strong>{params.value}</strong>,
   },
   {
+    field: "Address",
+    headerName: "Địa Chỉ",
+    width: 300,
+ 
+  },
+  {
     field: "Email",
     headerName: "Email Hóa Đơn Điện Tử",
     width: 300,
@@ -41,6 +47,7 @@ const columns = [
     width: 150,
  
   },
+
   {
     field: "IsCreateBillFirst",
     headerName: "Hình Thức Chọn",

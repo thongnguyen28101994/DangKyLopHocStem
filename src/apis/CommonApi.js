@@ -86,9 +86,13 @@ export const CommonApi = {
     const url = "/GetOfficialParticipantIsPaidV2";
     return axiosClient.get(url);
   },
-  getOfficialParticipantNotRegisterV2: () => {
-    const url = "/GetOfficialParticipantNotRegisterV2";
+  getOfficialParticipantNotRegisterV2: (id="") => {
+    const url = `/GetOfficialParticipantNotRegisterV2/${id}`;
     return axiosClient.get(url);
+  },
+  postUpdateEInvoice: (params) => {
+    const url = `/UpdateEInvoice`;
+    return axiosClient.post(url, params);
   },
   getParticipantIsRegisterV2: () => {
     const url = "/GetParticipantIsRegisterV2";
