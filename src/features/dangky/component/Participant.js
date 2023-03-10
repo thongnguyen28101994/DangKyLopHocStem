@@ -14,10 +14,16 @@ import LoginAppBar from "../../../component/MaterialDesign/LoginAppBar";
 import PersonRegisterModal from "./PersonRegisterModal";
 import { useParams } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
+import RegisterElectronicBill from "./RegisterElectronicBill";
 export default function Participant() {
   const urlParam = useParams();
   const [participant, SetParticipant] = useState([]);
   const [openMessage, setOpenMessage] = useState(false);
+  const [openModal,setOpenModal]= React.useState(false);
+  const [selectCLASSID,setSelectedCLASSID] = React.useState("");
+  const handleOpenModal = () => {
+    setOpenModal(!openModal)
+  }
   const CallAPIGetParticipant = async () => {
     const a = JSON.parse(localStorage.getItem("Data"));
     const response = await CommonApi.getParticipant(
@@ -119,6 +125,18 @@ export default function Participant() {
               Đăng Ký Tập Huấn
             </Typography>
             <Button
+                    variant="outlined"
+                    size="medium"
+                    color="secondary"
+                    sx={{marginLeft:1}}
+                    onClick={() => {
+                      handleOpenModal();
+                      setSelectedCLASSID(urlParam.CLASS_ID);
+                    }}
+                  >
+                    Đăng Ký Hóa Đơn
+                  </Button>{" "}
+            <Button
               variant="outlined"
               size="normal"
               sx={{ marginRight: "5px" }}
@@ -147,6 +165,7 @@ export default function Participant() {
         isOpen={isModalClassDetailOpen}
         handleClose={handleCloseModalClassDetail}
       />
+       <RegisterElectronicBill isOpen={openModal} handleClose={handleOpenModal} CLASS_ID={selectCLASSID}/>
       {/* <Snackbar
         anchorOrigin={"top,center"}
         open={openMessage}

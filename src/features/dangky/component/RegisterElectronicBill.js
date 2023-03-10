@@ -22,7 +22,6 @@ export default function RegisterElectronicBill({
   handleReload,
   CLASS_ID,
 }) {
-  const [classList, setClassList] = React.useState([]);
   const a = JSON.parse(localStorage.getItem("Data"));
   const schema = yup.object({
     TaxCode: yup.string().required("Chưa Nhập MST"),
@@ -76,7 +75,7 @@ export default function RegisterElectronicBill({
       setValue("ID", 0);
       setValue("Email", "");
       setValue("Phone", "");
-      setValue("QuantityRegister", 0);
+      setValue("QuantityRegister", "");
       setValue("SchoolNote", "");
       setValue("IsCreateBillFirst", "");
       setValue("IsMergeBill", "");
@@ -193,14 +192,7 @@ async  function  onSubmit(data) {
                     label="Yêu Cầu Xuất Hóa Đơn "
                     {...field}
                     onChange={(e, v) => {
-                      if (
-                        e.target.value === "Xuất 1 hóa đơn chung cho cả trường"
-                      ) {
-                        setValue("QuantityRegister",0)
-                        setIsEnableQuantityRegister(false);
-                      } else {
-                        setIsEnableQuantityRegister(true);
-                      }
+              
 
                       field.onChange(e.target.value);
                     }}
@@ -221,7 +213,6 @@ async  function  onSubmit(data) {
               )}
             />
 
-            {isEnableQuantityRegister ? (
               <Controller
                 name="QuantityRegister"
                 control={control}
@@ -241,9 +232,7 @@ async  function  onSubmit(data) {
                   </>
                 )}
               ></Controller>
-            ) : (
-              ""
-            )}
+          
             <Controller
               name="Email"
               control={control}

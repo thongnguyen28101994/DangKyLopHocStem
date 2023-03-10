@@ -70,8 +70,9 @@ const ParticipantIsPaid = () => {
   const [SchoolID, setSchoolID] = React.useState({ FINDNAME: "" });
   const [classList, setClassList] = React.useState([]);
   const [selectedDate, SetselectedDate] = React.useState(moment().format());
-  const CallAPIGetParticipant = async () => {
-    const response = await CommonApi.getOfficialParticipantIsPaidV2();
+  const [selectedClassID,setSelectedClassID] = React.useState("");
+  const CallAPIGetParticipant = async (id) => {
+    const response = await CommonApi.getOfficialParticipantIsPaidV2(id);
     if (response.StatusCode === 200) {
       const newData = response.Result.map((val, i) => {
         return {
@@ -85,7 +86,7 @@ const ParticipantIsPaid = () => {
     }
   };
   const callAPIGetClassList = async () => {
-    const response = await CommonApi.getClassList();
+    const response = await CommonApi.getClassListByAdmin();
     setClassList(response.Result);
   };
   const callAPIGetDMQuanHuyen = async () => {
@@ -124,7 +125,7 @@ const ParticipantIsPaid = () => {
       const response = await CommonApi.postChangeStatusToPaid(request);
       setUserSelection([]);
       if (response.StatusCode === 200) {
-        await CallAPIGetParticipant();
+        await CallAPIGetParticipant(selectedClassID);
       } else {
         alert(response?.Message);
       }
@@ -141,27 +142,60 @@ const ParticipantIsPaid = () => {
       const response = await CommonApi.postChangeStatusToUnPaid(request);
       if (response.StatusCode === 200) {
         setUserSelection([]);
-        await CallAPIGetParticipant();
+        await CallAPIGetParticipant(selectedClassID);
       } else {
         alert(response?.Message);
       }
     }
   };
   useEffect(() => {
-    CallAPIGetParticipant();
+   // CallAPIGetParticipant();
     callAPIGetDMQuanHuyen();
     callAPIGetClassList();
   }, []);
   return (
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <AppBar position="static" component="nav" color="transparent">
-        <Toolbar sx={{ display: "flex" }}>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Autocomplete
+              //  value={selectedItem?selectedItem:""}
+              disableClearable
+              size="large"
+              id="combobox1"
+              options={classList}
+              // isOptionEqualToValue={(option, value) => option.id === value.id}
+              getOptionLabel={(item) => item.CLASS_NAME}
+              onChange={(e, value) => {
+                setSelectedClassID(value.ID)
+                CallAPIGetParticipant(value.ID);
+                // callAPIGetDMTruong(value.MA);
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label=" Chọn Khóa học" />
+              )}
+              sx={{ width: 400 }}
+            />
+            
+          </Box>
+          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Danh Sách Giáo Viên Thanh Toán:{" "}
-            {participants.filter((e) => e.NGAY_DONG_TIEN !== null).length} -
-            Chưa Thanh Toán:{" "}
-            {participants.filter((e) => e.NGAY_DONG_TIEN === null).length}
-          </Typography>
+              Danh Sách Giáo Viên Thanh Toán:{" "}
+              {participants.filter((e) => e.NGAY_DONG_TIEN !== null).length} -
+              Chưa Thanh Toán:{" "}
+              {participants.filter((e) => e.NGAY_DONG_TIEN === null).length}
+            </Typography>
+          </Box>
+          
+        </Toolbar>
+      </AppBar>
+      <AppBar
+        position="static"
+        component="nav"
+        color="transparent"
+        sx={{ marginTop: 1 }}
+      >
+        <Toolbar sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             variant="outlined"
             size="normal"

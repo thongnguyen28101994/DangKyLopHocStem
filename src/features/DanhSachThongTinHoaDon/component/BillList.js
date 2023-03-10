@@ -35,6 +35,11 @@ const columns = [
     width: 300,
   },
   {
+    field: "QuantityRegister",
+    headerName: "Số Lượng GV Đăng Ký",
+    width: 200,
+  },
+  {
     field: "Email",
     headerName: "Email Hóa Đơn Điện Tử",
     width: 300,
@@ -55,11 +60,7 @@ const columns = [
     headerName: "Yêu Cầu Xuất Hóa Đơn",
     width: 200,
   },
-  {
-    field: "QuantityRegister",
-    headerName: "Số Lượng Xuất Hóa Đơn",
-    width: 200,
-  },
+
   {
     field: "SchoolNote",
     headerName: "Ghi Chú Của Trường",

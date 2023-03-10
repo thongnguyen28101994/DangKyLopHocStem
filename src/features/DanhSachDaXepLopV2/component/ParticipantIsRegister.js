@@ -84,7 +84,7 @@ const ParticipantIsRegister = () => {
   const [exportData, setExportData] = useState([]);
   const [findParticipant, setFindParticipant] = useState([]);
   const [userSelection, setUserSelection] = useState([]);
-  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedItem, setSelectedItem] = useState("");
   const [einvoice, setEInvoice] = useState("");
   // const [districtList, setDistrict] = React.useState([]);
   // const [schoolList, setSchoolList] = React.useState([]);
@@ -109,9 +109,10 @@ const ParticipantIsRegister = () => {
     if (response.StatusCode === 200) {
       const newData = response.Result.map((val, i) => {
         return {
-          ...val,
+         
           id: val.ID,
           STT: i + 1,
+          ...val,
         };
       });
       setParticipantNotRegisted(newData);
@@ -144,7 +145,7 @@ const ParticipantIsRegister = () => {
       const response = await CommonApi.postChangeStatusToRegisted(request);
       if (response.StatusCode === 200) {
         setUserSelection([]);
-        await CallAPIGetParticipant();
+        await CallAPIGetParticipant(selectedItem);
         await CallAPIGetParticipantNotRegisted();
       } else {
         alert(response?.Message);
@@ -163,7 +164,7 @@ const ParticipantIsRegister = () => {
       const response = await CommonApi.postChangeStatusToRegisted(request);
       setUserSelection([]);
       if (response.StatusCode === 200) {
-        await CallAPIGetParticipant();
+        await CallAPIGetParticipant(selectedItem);
         await CallAPIGetParticipantNotRegisted();
       } else {
         alert(response?.Message);
@@ -171,7 +172,7 @@ const ParticipantIsRegister = () => {
     }
   };
   const CallAPIUpdateEInvoiceForRegister = async (param) => {
-    if (userSelection.length == 0) alert("Chưa Chọn Giáo Viên");
+    if (userSelection.length === 0) alert("Chưa Chọn Giáo Viên");
     const request = userSelection.map((val) => {
       return {
         ID: val,
@@ -182,7 +183,7 @@ const ParticipantIsRegister = () => {
     if (response.StatusCode === 200) {
       setUserSelection([]);
       setEInvoice("");
-      await CallAPIGetParticipant(classList.at(-1).ID);
+      await CallAPIGetParticipant(selectedItem);
     } else {
       alert(response?.Message);
     }
@@ -191,25 +192,25 @@ const ParticipantIsRegister = () => {
   useEffect(() => {
     callAPIGetClassList();
 
-    CallAPIGetParticipantNotRegisted();
+   // CallAPIGetParticipantNotRegisted();
     // callAPIGetDMQuanHuyen();
   }, []);
-  useEffect(() => {
-    if (classList.length > 0) {
-      // setSelectedItem(classList.at(-1));
-      CallAPIGetParticipant(classList.at(-1).ID);
-    }
-  }, [classList]);
+  // useEffect(() => {
+  //   if (classList.length > 0) {
+  //     // setSelectedItem(classList.at(-1));
+  //     CallAPIGetParticipant(classList.at(-1).ID);
+  //   }
+  // }, [classList]);
   useEffect(() => {
     if (participantNotRegisteds.length > 0) {
-      let newData = [...participantNotRegisteds];
-      newData.forEach((v) => {
-        delete v.ID;
-        delete v.CLASS_ID;
-        delete v.MAT_KHAU;
-        delete v.id;
-      });
-      const newSortedData = newData.map((z) => ({
+      const newData1 = [...participantNotRegisteds];
+      // newData1.forEach((v) => {
+      //   delete v.ID;
+      //   delete v.CLASS_ID;
+      //   delete v.MAT_KHAU;
+      //   delete v.id;
+      // });
+      const newSortedData = newData1.map((z) => ({
         STT: z["STT"],
         QUAN_HUYEN: z["QUAN_HUYEN"],
         TEN_TRUONG: z["TEN_TRUONG"],
@@ -221,6 +222,7 @@ const ParticipantIsRegister = () => {
         NGAY_XEP_LOP: moment(z["NGAY_XEP_LOP"]).isValid()
           ? moment(z["NGAY_XEP_LOP"]).format("DD/MM/YYYY hh:mm:ss")
           : "",
+        SO_HOA_DON:z["EInvoice"],
         MA: z["MA"],
         MA_TRUONG: z["DonViID"],
         TEN_DANG_NHAP: z["TEN_DANG_NHAP"],
@@ -233,6 +235,27 @@ const ParticipantIsRegister = () => {
     <Box sx={{ display: "flex", flexDirection: "column" }}>
       <AppBar position="static" component="nav" color="transparent">
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Autocomplete
+              //  value={selectedItem?selectedItem:""}
+              disableClearable
+              size="large"
+              id="combobox1"
+              options={classList}
+              // isOptionEqualToValue={(option, value) => option.id === value.id}
+              getOptionLabel={(item) => item.CLASS_NAME}
+              onChange={(e, value) => {
+                setSelectedItem(value.ID);
+                CallAPIGetParticipant(value.ID);
+                CallAPIGetParticipantNotRegisted();
+                
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label=" Chọn Khóa học" />
+              )}
+              sx={{ width:400 }}
+            />
+          </Box>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography
               variant="h6"
@@ -241,35 +264,17 @@ const ParticipantIsRegister = () => {
             >
               Xếp Lớp Chính Thức:{" "}
               {
-                participantNotRegisteds.filter((e) => e.DA_XEP_LOP === true)
+                participantNotRegisteds.filter((e) => e.DA_XEP_LOP === true && e.CLASS_ID===selectedItem)
                   .length
               }{" "}
               - Chưa Chính Thức:{" "}
               {
-                participantNotRegisteds.filter((e) => e.DA_XEP_LOP === false)
+                participantNotRegisteds.filter((e) => e.DA_XEP_LOP === false && e.CLASS_ID===selectedItem)
                   .length
               }
             </Typography>
           </Box>
-          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Autocomplete
-              //  value={selectedItem?selectedItem:""}
-              disableClearable
-              size="small"
-              id="combobox1"
-              options={classList}
-              // isOptionEqualToValue={(option, value) => option.id === value.id}
-              getOptionLabel={(item) => item.CLASS_NAME}
-              onChange={(e, value) => {
-                CallAPIGetParticipant(value.ID);
-                // callAPIGetDMTruong(value.MA);
-              }}
-              renderInput={(params) => (
-                <TextField {...params} label=" Chọn Khóa học" />
-              )}
-              sx={{ width: 300 }}
-            />
-          </Box>
+         
         </Toolbar>
       </AppBar>
       <AppBar
