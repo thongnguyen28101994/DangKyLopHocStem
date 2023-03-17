@@ -96,10 +96,10 @@ export default function RegisterElectronicBill({
   }
 async  function  onSubmit(data) {
     const newData = { ...data };
-    newData.CLASS_ID = CLASS_ID;
+    newData.CLASS_ID = parseInt(CLASS_ID);
     newData.DonViID = a.MA_TRUONG;
     const response = await CommonApi.postSaveBill([newData]);
-    console.log(response);
+  
     if (response.StatusCode === 200) {
       alert("Lưu Thành Công");
     }
