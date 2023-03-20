@@ -30,6 +30,12 @@ const columns = [
     renderCell: (params) => <strong>{params.value}</strong>,
   },
   {
+    field: "IsExported",
+    headerName: "Trạng Thái Hoá Đơn",
+    width: 150,
+    renderCell: (params) => <strong>{params.value?"Đã Xuất":"Chưa Xuất"}</strong>,
+  },
+  {
     field: "Address",
     headerName: "Địa Chỉ",
     width: 300,
@@ -111,8 +117,19 @@ const BillList = () => {
     const response = await CommonApi.getClassListByAdmin();
     SetClassList(response.Result);
   };
-  const submitData = (e, value) => {
-    console.log(selectedClass);
+  const submitData =async (e, value) => {
+
+    const newData=[];
+    selectedClass.forEach((v,i)=>{
+      let d = billList.find(x=>x.ID===v);
+      d.IsExported=!d.IsExported;
+      newData.push(d);
+    });
+   const response= await CommonApi.postSaveBill(newData);
+   if(response.StatusCode===200)
+   {
+      getBillList();
+   }
   };
   useEffect(() => {
     getBillList();
@@ -122,7 +139,7 @@ const BillList = () => {
     if (billList.length > 0) {
       let newData = [...billList];
       newData.forEach((v) => {
-        delete v.ID;
+      
         delete v.CLASS_ID;
         delete v.MAT_KHAU;
         delete v.id;

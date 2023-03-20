@@ -7,13 +7,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory, useLocation, useRouteMatch } from "react-router-dom";
 import { CommonApi } from "../../../apis/CommonApi";
 import ClassDetailModal from "./ClassDetailModal";
 import moment from "moment";
 export default function ClassList({ Class, handleReload }) {
   const [isModalClassDetailOpen, setModalClassOpen] = React.useState(false);
   const [IDTest, setID] = React.useState(-1);
+  
   const handleCloseModalClassDetail = () => {
     setModalClassOpen(false);
   };
@@ -35,6 +36,7 @@ export default function ClassList({ Class, handleReload }) {
               <TableCell align="left">Thời Gian Kết Thúc Đăng Ký</TableCell>
               <TableCell align="left">Thời Gian Kết Thúc Đóng Tiền</TableCell>
               <TableCell align="left">Ghi Chú</TableCell>
+              <TableCell align="left">Link Xếp Lớp</TableCell>
               <TableCell align="left">Trạng Thái</TableCell>
               <TableCell align="center">Thao Tác</TableCell>
             </TableRow>
@@ -59,6 +61,9 @@ export default function ClassList({ Class, handleReload }) {
                 </TableCell>
                 <TableCell component="th" align="left">
                   {row.NOTE}
+                </TableCell>
+                <TableCell component="th" align="left">
+                 <a href={`${window.location.protocol}//${window.location.host}/danhsachxeplop/${row.ID}`}>{`${window.location.protocol}//${window.location.host}/danhsachxeplop/${row.ID}`}</a>
                 </TableCell>
                 <TableCell component="th" align="left">
                   {row.IS_OPEN?"Hoạt Động":"Khóa"}

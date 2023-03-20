@@ -210,7 +210,8 @@ const ParticipantIsRegister = () => {
       //   delete v.MAT_KHAU;
       //   delete v.id;
       // });
-      const newSortedData = newData1.map((z) => ({
+      console.log(newData1)
+      const newSortedData = newData1.filter(x=>x.DA_XEP_LOP===true&& x.CLASS_ID===selectedItem).map((z) => ({
         STT: z["STT"],
         QUAN_HUYEN: z["QUAN_HUYEN"],
         TEN_TRUONG: z["TEN_TRUONG"],
@@ -228,6 +229,7 @@ const ParticipantIsRegister = () => {
         TEN_DANG_NHAP: z["TEN_DANG_NHAP"],
         DI_DONG: z["DI_DONG"],
       }));
+     console.log(newSortedData)
       setExportData(newSortedData);
     }
   }, [participantNotRegisteds]);

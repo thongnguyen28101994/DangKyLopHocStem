@@ -8,6 +8,7 @@ import AdminLogin from "../features/Login_Page/adminLogin";
 import PrivateRoute from "./PrivateRoute";
 import AdminMenuScreen from "../features/NavigationMenuScreen/AdminMenuScreen";
 import UserMenuScreen from "../features/NavigationMenuScreen/UserMenuScreen";
+import ListParticipantRegisted from "../features/dangky/component/ListParticipantRegisted";
 function Routes() {
   return (
     <>
@@ -25,6 +26,7 @@ function Routes() {
         <Route path="/admin/login" component={AdminLogin}></Route>
         <Route path="/user" component={UserMenuScreen}></Route>
         <Route path="/admin" component={AdminMenuScreen}></Route>
+        <Route path="/danhsachxeplop/:classid" component={ListParticipantRegisted}></Route>
 
         {/* <Route path="/quanly" component={Login}></Route> */}
         {/* <Route path="/test" component={Test}></Route> */}
