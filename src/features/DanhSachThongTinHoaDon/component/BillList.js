@@ -33,7 +33,9 @@ const columns = [
     field: "IsExported",
     headerName: "Trạng Thái Hoá Đơn",
     width: 150,
-    renderCell: (params) => <strong>{params.value?"Đã Xuất":"Chưa Xuất"}</strong>,
+    renderCell: (params) => (
+      <strong>{params.value ? "Đã Xuất" : "Chưa Xuất"}</strong>
+    ),
   },
   {
     field: "Address",
@@ -117,19 +119,18 @@ const BillList = () => {
     const response = await CommonApi.getClassListByAdmin();
     SetClassList(response.Result);
   };
-  const submitData =async (e, value) => {
-
-    const newData=[];
-    selectedClass.forEach((v,i)=>{
-      let d = billList.find(x=>x.ID===v);
-      d.IsExported=!d.IsExported;
+  const submitData = async (e, value) => {
+    const newData = [];
+    selectedClass.forEach((v, i) => {
+      let d = billList.find((x) => x.ID === v);
+      d.IsExported = !d.IsExported;
       newData.push(d);
     });
-   const response= await CommonApi.postSaveBill(newData);
-   if(response.StatusCode===200)
-   {
+    const response = await CommonApi.postSaveBill(newData);
+    if (response.StatusCode === 200) {
+      SetSelectedClass([]);
       getBillList();
-   }
+    }
   };
   useEffect(() => {
     getBillList();
@@ -139,7 +140,6 @@ const BillList = () => {
     if (billList.length > 0) {
       let newData = [...billList];
       newData.forEach((v) => {
-      
         delete v.CLASS_ID;
         delete v.MAT_KHAU;
         delete v.id;
