@@ -37,8 +37,12 @@ export const CommonApi = {
     const url = `/GetParticipant/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipant: (DonViID, CLASS_ID) => {
-    const url = `/GetOfficialParticipant/${DonViID}/${CLASS_ID}`;
+  getOfficialParticipant: (CLASS_ID,DonViID) => {
+    console.log(DonViID)
+    let url = `/GetOfficialParticipant/${CLASS_ID}`;
+    if (DonViID !== undefined) {
+      url = `/GetOfficialParticipant/${CLASS_ID}/${DonViID}/`;
+    }
     return axiosClient.get(url);
   },
 
@@ -82,11 +86,11 @@ export const CommonApi = {
     const url = `/InsertClass`;
     return axiosClient.post(url, param);
   },
-  getOfficialParticipantIsPaidV2: (id="") => {
+  getOfficialParticipantIsPaidV2: (id = "") => {
     const url = `/GetOfficialParticipantIsPaidV2/${id}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipantNotRegisterV2: (id="") => {
+  getOfficialParticipantNotRegisterV2: (id = "") => {
     const url = `/GetOfficialParticipantNotRegisterV2/${id}`;
     return axiosClient.get(url);
   },
@@ -98,7 +102,7 @@ export const CommonApi = {
     const url = "/GetParticipantIsRegisterV2";
     return axiosClient.get(url);
   },
-  getBillList: (id="") => {
+  getBillList: (id = "") => {
     const url = `/GetBillList/${id}`;
     return axiosClient.get(url);
   },

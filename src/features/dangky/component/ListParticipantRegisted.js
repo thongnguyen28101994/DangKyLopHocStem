@@ -66,12 +66,25 @@ const [classList,setClassList] =React.useState({});
     setClassList(newData);
   };
   const { classid } = useParams();
+  const getParticipantList = async () =>{
+    const response = await CommonApi.getOfficialParticipant(classid);
+    if (response.StatusCode === 200) {
+      const newData = response.Result.map((val, i) => {
+        return {
+          id: val.ID,
+          STT: i + 1,
+          ...val,
+        };
+      });
+
+      SetParticipant(newData);
+    }
+  }
   const handleFindSchoolID = async () => {
     const response = await CommonApi.getOfficialParticipant(
-      SchoolID.SchoolID,
-      classid
+      classid,
+      SchoolID.SchoolID
     );
-    console.log(response.Result)
     if (response.StatusCode === 200) {
       const newData = response.Result.map((val, i) => {
         return {
@@ -87,6 +100,7 @@ const [classList,setClassList] =React.useState({});
   useEffect(() => {
     callAPIGetDMQuanHuyen();
     callAPIGetClassList();
+    getParticipantList()
   }, []);
 //   useEffect(()=>{
 // console.log(classList)
@@ -157,6 +171,7 @@ const [classList,setClassList] =React.useState({});
         <Box component="main" sx={{ mt: 1.5 }}>
           <Paper elevation={3}>
             <EnhancedTable
+            height={"90vh"}
               data={participant}
               headTable={headTable}
               handleRemoveList={() => {}}

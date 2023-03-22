@@ -3,12 +3,12 @@ import React from "react";
 import EnhancedTableBody from "./EnhancedTableBody";
 import EnhancedTableHead from "./EnhancedTableHead";
 export default function EnhancedTable(props) {
-  const { data, headTable } = props;
+  const { data, headTable,height } = props;
   const HandleRowChange = (data) => {
     console.log(data);
   };
   return (
-    <TableContainer sx={{ maxHeight: 370 }}>
+    <TableContainer sx={{ maxHeight: height?height: 370 }}>
       <Table stickyHeader aria-label="sticky table">
         <EnhancedTableHead headTable={headTable} />
         <EnhancedTableBody
