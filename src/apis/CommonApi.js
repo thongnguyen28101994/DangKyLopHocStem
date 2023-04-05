@@ -54,6 +54,10 @@ export const CommonApi = {
     const url = `/DeleteParticipant/${id}`;
     return axiosClient.get(url);
   },
+  getRemoveParticipantAdmin: (params) => {
+    const url = `/DeleteParticipantV2/`;
+    return axiosClient.post(url,params);
+  },
   getOfficialParticipantUnpaid: (DonViID, CLASS_ID) => {
     const url = `/GetOfficialParticipantUnpaid/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
