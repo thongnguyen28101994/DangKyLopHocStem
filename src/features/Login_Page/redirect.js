@@ -13,7 +13,8 @@ const Direction = () => {
   useEffect(() => {
     CommonApi.getSession().then(async (res) => {
       if (res.statusCode === 200) {
-        localStorage.setItem("Data", JSON.stringify(res.result));       
+        localStorage.setItem("Data", JSON.stringify({...res.result, MA_TRUONG: res.result.SchoolId}));      
+        history.replace("/user/loptaphuan"); 
       }
     });
   }, [history]);
