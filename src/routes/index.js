@@ -4,6 +4,8 @@ import Test from "../features/test";
 import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import UserLogin from "../features/Login_Page/userLogin";
+import LoginSSO from "../features/Login_Page/redirect";
+
 import AdminLogin from "../features/Login_Page/adminLogin";
 import PrivateRoute from "./PrivateRoute";
 import AdminMenuScreen from "../features/NavigationMenuScreen/AdminMenuScreen";
@@ -24,6 +26,7 @@ function Routes() {
           <AdminMenuScreen />
         </PrivateRoute>
         <Route path="/login" component={UserLogin}></Route>
+        <Route path="/loginsso" component={LoginSSO}></Route>
         <Route path="/admin/login" component={AdminLogin}></Route>
         <Route path="/user" component={UserMenuScreen}></Route>
         <Route path="/admin" component={AdminMenuScreen}></Route>

@@ -148,6 +148,24 @@ const ParticipantIsPaid = () => {
       }
     }
   };
+  const handleRemoveParticipant = async () => {
+    if (userSelection.length > 0) {
+      const request = userSelection.map((val) => {
+        return {
+          ID: val,
+        };
+      });
+      const response = await CommonApi.getRemoveParticipantAdmin(request);
+      if (response.StatusCode === 200) {
+        alert("Xoá Thành Công");
+  
+        CallAPIGetParticipant();
+      } else {
+        alert(response.Result);
+      }
+    }
+   
+  };
   useEffect(() => {
    // CallAPIGetParticipant();
     callAPIGetDMQuanHuyen();
@@ -196,6 +214,16 @@ const ParticipantIsPaid = () => {
         sx={{ marginTop: 1 }}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Button
+            variant="outlined"
+            size="normal"
+            color="error"
+            sx={{ marginRight: "15px" }}
+            onClick={handleRemoveParticipant}
+            startIcon={<SaveIcon />}
+          >
+            Xóa Đăng Ký
+          </Button>
           <Button
             variant="outlined"
             size="normal"
