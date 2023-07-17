@@ -5,7 +5,7 @@ export const CommonApi = {
     const url = `/CSDLAuth/getSessionData`;
     return axiosClientSSO.get(url, { headers: { Token: sessionStorage.getItem('token') } });
   },
-  
+
   loginsso: (data) => {
     const url = `/CSDLAuth/loginsso`;
     return axiosClientSSO.post(url, data);
@@ -45,6 +45,10 @@ export const CommonApi = {
   getAllNguoiDungByDonViID: (DonViID) => {
     const url = `/GetAllNguoiDungByDonViID/${DonViID}`;
     return axiosClient.get(url);
+  },
+  getAllNguoiDungByDonViIDSSO: (DonViID) => {
+    const url = `/CSDLGetData/getGiaoVien/${DonViID}`;
+    return axiosClientSSO.post(url, { "sysUserName": "TTTT", "sysPassword": "NGe4DlO9st#$j23g!@%h24WFcgNws6fZvSbxnjlRF" });
   },
   getParticipant: (DonViID, CLASS_ID) => {
     const url = `/GetParticipant/${DonViID}/${CLASS_ID}`;

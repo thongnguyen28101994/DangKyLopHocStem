@@ -181,7 +181,7 @@ export default function UserLogin() {
       Param2: "new",
       Param3: "",
       Returnuri: "http://localhost:3000/loginsso",
-      Returnuri: "https://taphuan.hcm.edu.vn/loginsso",
+      // Returnuri: "https://taphuan.hcm.edu.vn/loginsso",
       isHocSinh: false,
     };
     await CommonApi.loginsso(data).then((res) => {

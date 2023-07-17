@@ -22,6 +22,7 @@ export const axiosClientSSO = axios.create({
   baseURL: "https://apigateway.hcm.edu.vn/SSO",
   headers: {
     "content-type": "application/json",
+    "Token": sessionStorage.getItem("token")
   },
   // transformResponse: [
   //   function (data) {

@@ -197,8 +197,9 @@ export default function PersonDetailTable({
     setOrderBy(property);
   };
   const CallAPIGetAllNguoiDungByDonViID = async () => {
-    const response = await CommonApi.getAllNguoiDungByDonViID(d.MA_TRUONG);
-    setRows(response.Result);
+    const response = await CommonApi.getAllNguoiDungByDonViIDSSO(d.SchoolId);
+  
+    setRows(response.result.map(item => { return { ...item, MA: item.MA_NHAN_SU, CHUC_VU: item.TEN_CHUC_VU } }));
   };
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -333,14 +334,14 @@ export default function PersonDetailTable({
                           >
                             {row.MA}
                           </TableCell>
-                          <TableCell align="right">{row.HO_TEN}</TableCell>
-                          <TableCell align="right">
+                          <TableCell align="left">{row.HO_TEN}</TableCell>
+                          <TableCell align="left">
                             {row.TEN_DANG_NHAP}
                           </TableCell>
-                          <TableCell align="right">{row.EMAIL}</TableCell>
+                          <TableCell align="left">{row.EMAIL}</TableCell>
                           {/* <TableCell align="right">{row.SO_CMTND}</TableCell> */}
-                          <TableCell align="right">{row.DI_DONG}</TableCell>
-                          <TableCell align="right">{row.CHUC_VU}</TableCell>
+                          <TableCell align="left">{row.DI_DONG}</TableCell>
+                          <TableCell align="left">{row.CHUC_VU}</TableCell>
                         </TableRow>
                       );
                     })}
@@ -357,7 +358,7 @@ export default function PersonDetailTable({
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[50,100]}
+              rowsPerPageOptions={[50, 100]}
               component="div"
               count={rows.length}
               rowsPerPage={rowsPerPage}
