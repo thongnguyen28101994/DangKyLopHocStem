@@ -1,6 +1,19 @@
-import { axiosClient } from "./mainConfigAxios";
+import { axiosClient, axiosClientSSO } from "./mainConfigAxios";
 
 export const CommonApi = {
+  getSession: () => {
+    const url = `/CSDLAuth/getSessionData`;
+    return axiosClientSSO.get(url, { headers: { Token: sessionStorage.getItem('token') } });
+  },
+  
+  loginsso: (data) => {
+    const url = `/CSDLAuth/loginsso`;
+    return axiosClientSSO.post(url, data);
+  },
+  getSchools: (huyenId) => {
+    const url = `/CSDLGetData/getTruongByQuanID/${huyenId}/02`;
+    return axiosClientSSO.get(url);
+  },
   getDistrict: () => {
     const url = `/GetDMQuanHuyen`;
     return axiosClient.get(url);
@@ -37,7 +50,7 @@ export const CommonApi = {
     const url = `/GetParticipant/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
-  getOfficialParticipant: (CLASS_ID,DonViID) => {
+  getOfficialParticipant: (CLASS_ID, DonViID) => {
     console.log(DonViID)
     let url = `/GetOfficialParticipant/${CLASS_ID}`;
     if (DonViID !== undefined) {
@@ -56,7 +69,7 @@ export const CommonApi = {
   },
   getRemoveParticipantAdmin: (params) => {
     const url = `/DeleteParticipantV2/`;
-    return axiosClient.post(url,params);
+    return axiosClient.post(url, params);
   },
   getOfficialParticipantUnpaid: (DonViID, CLASS_ID) => {
     const url = `/GetOfficialParticipantUnpaid/${DonViID}/${CLASS_ID}`;
