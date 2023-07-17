@@ -28,137 +28,137 @@ export default function UserLogin() {
   const [huyenSelected, setHuyenSelected] = React.useState(null);
   const [huyens, setHuyens] = React.useState([
     {
-      "ID": 1,
-      "MA": "760",
-      "TEN": "Quận 1",
-      "CAP": "Quận"
+      ID: 1,
+      MA: "760",
+      TEN: "Quận 1",
+      CAP: "Quận",
     },
     {
-      "ID": 2,
-      "MA": "761",
-      "TEN": "Quận 12",
-      "CAP": "Quận"
+      ID: 2,
+      MA: "761",
+      TEN: "Quận 12",
+      CAP: "Quận",
     },
     {
-      "ID": 3,
-      "MA": "762",
-      "TEN": "Thành Phố Thủ Đức",
-      "CAP": "Quận"
+      ID: 3,
+      MA: "762",
+      TEN: "Thành Phố Thủ Đức",
+      CAP: "Quận",
     },
     {
-      "ID": 4,
-      "MA": "764",
-      "TEN": "Quận Gò Vấp",
-      "CAP": "Quận"
+      ID: 4,
+      MA: "764",
+      TEN: "Quận Gò Vấp",
+      CAP: "Quận",
     },
     {
-      "ID": 5,
-      "MA": "765",
-      "TEN": "Quận Bình Thạnh",
-      "CAP": "Quận"
+      ID: 5,
+      MA: "765",
+      TEN: "Quận Bình Thạnh",
+      CAP: "Quận",
     },
     {
-      "ID": 6,
-      "MA": "766",
-      "TEN": "Quận Tân Bình",
-      "CAP": "Quận"
+      ID: 6,
+      MA: "766",
+      TEN: "Quận Tân Bình",
+      CAP: "Quận",
     },
     {
-      "ID": 7,
-      "MA": "767",
-      "TEN": "Quận Tân Phú",
-      "CAP": "Quận"
+      ID: 7,
+      MA: "767",
+      TEN: "Quận Tân Phú",
+      CAP: "Quận",
     },
     {
-      "ID": 8,
-      "MA": "768",
-      "TEN": "Quận Phú Nhuận",
-      "CAP": "Quận"
+      ID: 8,
+      MA: "768",
+      TEN: "Quận Phú Nhuận",
+      CAP: "Quận",
     },
     {
-      "ID": 9,
-      "MA": "770",
-      "TEN": "Quận 3",
-      "CAP": "Quận"
+      ID: 9,
+      MA: "770",
+      TEN: "Quận 3",
+      CAP: "Quận",
     },
     {
-      "ID": 10,
-      "MA": "771",
-      "TEN": "Quận 10",
-      "CAP": "Quận"
+      ID: 10,
+      MA: "771",
+      TEN: "Quận 10",
+      CAP: "Quận",
     },
     {
-      "ID": 11,
-      "MA": "772",
-      "TEN": "Quận 11",
-      "CAP": "Quận"
+      ID: 11,
+      MA: "772",
+      TEN: "Quận 11",
+      CAP: "Quận",
     },
     {
-      "ID": 12,
-      "MA": "773",
-      "TEN": "Quận 4",
-      "CAP": "Quận"
+      ID: 12,
+      MA: "773",
+      TEN: "Quận 4",
+      CAP: "Quận",
     },
     {
-      "ID": 13,
-      "MA": "774",
-      "TEN": "Quận 5",
-      "CAP": "Quận"
+      ID: 13,
+      MA: "774",
+      TEN: "Quận 5",
+      CAP: "Quận",
     },
     {
-      "ID": 14,
-      "MA": "775",
-      "TEN": "Quận 6",
-      "CAP": "Quận"
+      ID: 14,
+      MA: "775",
+      TEN: "Quận 6",
+      CAP: "Quận",
     },
     {
-      "ID": 15,
-      "MA": "776",
-      "TEN": "Quận 8",
-      "CAP": "Quận"
+      ID: 15,
+      MA: "776",
+      TEN: "Quận 8",
+      CAP: "Quận",
     },
     {
-      "ID": 16,
-      "MA": "777",
-      "TEN": "Quận Bình Tân",
-      "CAP": "Quận"
+      ID: 16,
+      MA: "777",
+      TEN: "Quận Bình Tân",
+      CAP: "Quận",
     },
     {
-      "ID": 17,
-      "MA": "778",
-      "TEN": "Quận 7",
-      "CAP": "Quận"
+      ID: 17,
+      MA: "778",
+      TEN: "Quận 7",
+      CAP: "Quận",
     },
     {
-      "ID": 18,
-      "MA": "783",
-      "TEN": "Huyện Củ Chi",
-      "CAP": "Huyện"
+      ID: 18,
+      MA: "783",
+      TEN: "Huyện Củ Chi",
+      CAP: "Huyện",
     },
     {
-      "ID": 19,
-      "MA": "784",
-      "TEN": "Huyện Hóc Môn",
-      "CAP": "Huyện"
+      ID: 19,
+      MA: "784",
+      TEN: "Huyện Hóc Môn",
+      CAP: "Huyện",
     },
     {
-      "ID": 20,
-      "MA": "785",
-      "TEN": "Huyện Bình Chánh",
-      "CAP": "Huyện"
+      ID: 20,
+      MA: "785",
+      TEN: "Huyện Bình Chánh",
+      CAP: "Huyện",
     },
     {
-      "ID": 21,
-      "MA": "786",
-      "TEN": "Huyện Nhà Bè",
-      "CAP": "Huyện"
+      ID: 21,
+      MA: "786",
+      TEN: "Huyện Nhà Bè",
+      CAP: "Huyện",
     },
     {
-      "ID": 22,
-      "MA": "787",
-      "TEN": "Huyện Cần Giờ",
-      "CAP": "Huyện"
-    }
+      ID: 22,
+      MA: "787",
+      TEN: "Huyện Cần Giờ",
+      CAP: "Huyện",
+    },
   ]);
 
   const history = useHistory();
@@ -167,21 +167,21 @@ export default function UserLogin() {
 
   const getSchools = async (huyenId) => {
     const _schools = await CommonApi.getSchools(huyenId);
-    setSchoolList(_schools.result)
-  }
+    setSchoolList(_schools.result);
+  };
 
   const handleSSO = async () => {
-    const schoolID = "qitech";
-    // const schoolID = schoolSelected;
+    // const schoolID = "";
+    const schoolID = schoolSelected;
 
     const data = {
       SysUserName: "TTTT",
-      SysPassword: "NGe4DlO9st#\$j23g!@%h24WFcgNws6fZvSbxnjlRF",
+      SysPassword: "NGe4DlO9st#$j23g!@%h24WFcgNws6fZvSbxnjlRF",
       Param1: schoolID,
       Param2: "new",
       Param3: "",
-      Returnuri: "http://localhost:3000/loginsso",
-      // Returnuri: "https://taphuan.hcm.edu.vn/loginsso",
+      //Returnuri: "http://localhost:3000/loginsso",
+      Returnuri: "https://taphuan.hcm.edu.vn/loginsso",
       isHocSinh: false,
     };
     await CommonApi.loginsso(data).then((res) => {
@@ -191,9 +191,7 @@ export default function UserLogin() {
         console.error("Có lỗi xảy ra!");
       }
     });
-
   };
-
 
   return (
     <>
@@ -243,9 +241,7 @@ export default function UserLogin() {
               onChange={(e, value) => {
                 getSchools(value.MA);
               }}
-              renderInput={(params) => (
-                <TextField {...params} label="Huyện" />
-              )}
+              renderInput={(params) => <TextField {...params} label="Huyện" />}
             />
             <br />
             <Autocomplete
@@ -260,9 +256,7 @@ export default function UserLogin() {
               onChange={(e, value) => {
                 setSchoolSelected(value.MA);
               }}
-              renderInput={(params) => (
-                <TextField {...params} label="Trường" />
-              )}
+              renderInput={(params) => <TextField {...params} label="Trường" />}
             />
             <Button
               fullWidth
