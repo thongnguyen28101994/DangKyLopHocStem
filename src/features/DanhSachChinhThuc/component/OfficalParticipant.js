@@ -11,8 +11,8 @@ export default function OfficalParticipant() {
   const CallAPIGetParticipant = async () => {
     const a = JSON.parse(localStorage.getItem("Data"));
     const response = await CommonApi.getOfficialParticipant(
-      a.MA_TRUONG,
-      urlParam.CLASS_ID
+      urlParam.CLASS_ID,
+      a.MA_TRUONG
     );
     const newData = response.Result.map((val, index) => {
       return {

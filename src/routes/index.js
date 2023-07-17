@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import AdminMenuScreen from "../features/NavigationMenuScreen/AdminMenuScreen";
 import UserMenuScreen from "../features/NavigationMenuScreen/UserMenuScreen";
 import ListParticipantRegisted from "../features/dangky/component/ListParticipantRegisted";
+import RegisterParticipantNotInSchool from "../features/dangky/component/RegisterParticipantNotInSchool";
 function Routes() {
   return (
     <>
@@ -26,7 +27,14 @@ function Routes() {
         <Route path="/admin/login" component={AdminLogin}></Route>
         <Route path="/user" component={UserMenuScreen}></Route>
         <Route path="/admin" component={AdminMenuScreen}></Route>
-        <Route path="/danhsachxeplop/:classid" component={ListParticipantRegisted}></Route>
+        <Route
+          path="/danhsachxeplop/:classid"
+          component={ListParticipantRegisted}
+        ></Route>
+        <Route
+          path="/dangky/:classid"
+          component={RegisterParticipantNotInSchool}
+        ></Route>
 
         {/* <Route path="/quanly" component={Login}></Route> */}
         {/* <Route path="/test" component={Test}></Route> */}
