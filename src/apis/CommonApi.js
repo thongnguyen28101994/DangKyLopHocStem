@@ -3,7 +3,9 @@ import { axiosClient, axiosClientSSO } from "./mainConfigAxios";
 export const CommonApi = {
   getSession: () => {
     const url = `/CSDLAuth/getSessionData`;
-    return axiosClientSSO.get(url, { headers: { Token: sessionStorage.getItem('token') } });
+    return axiosClientSSO.get(url, {
+      headers: { Token: sessionStorage.getItem("token") },
+    });
   },
 
   loginsso: (data) => {
@@ -48,14 +50,21 @@ export const CommonApi = {
   },
   getAllNguoiDungByDonViIDSSO: (DonViID) => {
     const url = `/CSDLGetData/getGiaoVien/${DonViID}`;
-    return axiosClientSSO.post(url, { "sysUserName": "TTTT", "sysPassword": "NGe4DlO9st#$j23g!@%h24WFcgNws6fZvSbxnjlRF" });
+    return axiosClientSSO.post(
+      url,
+      {
+        sysUserName: "TTTT",
+        sysPassword: "NGe4DlO9st#$j23g!@%h24WFcgNws6fZvSbxnjlRF",
+      },
+      { headers: { Token: sessionStorage.getItem("token") } }
+    );
   },
   getParticipant: (DonViID, CLASS_ID) => {
     const url = `/GetParticipant/${DonViID}/${CLASS_ID}`;
     return axiosClient.get(url);
   },
   getOfficialParticipant: (CLASS_ID, DonViID) => {
-    console.log(DonViID)
+    console.log(DonViID);
     let url = `/GetOfficialParticipant/${CLASS_ID}`;
     if (DonViID !== undefined) {
       url = `/GetOfficialParticipant/${CLASS_ID}/${DonViID}/`;
